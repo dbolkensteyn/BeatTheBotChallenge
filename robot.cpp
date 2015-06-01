@@ -44,9 +44,11 @@ int main(int argc, char** argv)
   }
 
   std::vector<ImageObject> trainObjects;
-  for (int i = 1; i < argc - 1; i++) // TODO: Remove -1 to use all images as training ones
+  for (int i = 1; i < 42; i++) // TODO: Remove -1 to use all images as training ones
   {
-    char* path = argv[i];
+    if (i == 23) continue;
+    std::string path = std::string("training/") + std::to_string(i) + std::string(".png");
+    //char* path = argv[i];
     std::cout << "Loading training image: " << path << std::endl;
     Mat img = imread(path);
     if (!img.data)
@@ -66,20 +68,35 @@ int main(int argc, char** argv)
     frame = imread(argv[argc - 1]); // TODO: REMOVE ME
     ImageObject sceneObject(frame);
 
-    Mat result;
-    matchTemplate(sceneObject.originalImage, trainObjects[0].originalImage, result, CV_TM_SQDIFF_NORMED);
+    ImageObject* bestTrainObject = NULL;
+    double globalMinVal;
+    Point globalMinLoc;
+    for (auto &trainObject: trainObjects)
+    {
+      Mat result;
+      matchTemplate(sceneObject.originalImage, trainObject.originalImage, result, CV_TM_SQDIFF_NORMED);
 
-    double minVal;
-    Point minLoc;
-    double maxVal;
-    Point maxLoc;
-    minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
+      double minVal;
+      Point minLoc;
+      double maxVal;
+      Point maxLoc;
+      minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
+
+      if (bestTrainObject == NULL || minVal < globalMinVal)
+      {
+        bestTrainObject = &trainObject;
+        globalMinVal = minVal;
+        globalMinLoc = minLoc;
+      }
+    }
+
+    std::cout << "min distance = " << globalMinVal << std::endl;
 
     std::vector<Point2f> scene_corners_rect(4);
-    scene_corners_rect[0] = cvPoint(minLoc.x, minLoc.y);
-    scene_corners_rect[1] = cvPoint(minLoc.x + trainObjects[0].originalImage.cols, minLoc.y);
-    scene_corners_rect[2] = cvPoint(minLoc.x + trainObjects[0].originalImage.cols, minLoc.y + trainObjects[0].originalImage.rows);
-    scene_corners_rect[3] = cvPoint(minLoc.x, minLoc.y + trainObjects[0].originalImage.rows);
+    scene_corners_rect[0] = cvPoint(globalMinLoc.x, globalMinLoc.y);
+    scene_corners_rect[1] = cvPoint(globalMinLoc.x + bestTrainObject->originalImage.cols, globalMinLoc.y);
+    scene_corners_rect[2] = cvPoint(globalMinLoc.x + bestTrainObject->originalImage.cols, globalMinLoc.y + bestTrainObject->originalImage.rows);
+    scene_corners_rect[3] = cvPoint(globalMinLoc.x, globalMinLoc.y + bestTrainObject->originalImage.rows);
 
     //-- Draw lines between the corners (the mapped object in the scene - image_2 )
     line(frame, scene_corners_rect[0], scene_corners_rect[1], Scalar(0, 255, 0), 4);
