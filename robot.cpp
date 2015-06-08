@@ -122,7 +122,7 @@ int main(int argc, char** argv)
       std::vector<DMatch> goodMatches;
       for (int i = 0; i < matches.size(); i++)
       {
-        if (matches[i].distance < 60 || i < 4) // FIXME
+        if (matches[i].distance < 180)
         {
           std::cout << "adding point " << (i + 1) << " @ " << matches[i].distance << " from img: " << matches[i].imgIdx << std::endl;
           goodMatches.push_back(matches[i]);
