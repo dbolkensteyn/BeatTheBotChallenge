@@ -23,7 +23,7 @@ public:
   Mat descriptors;
 
   // TODO: Passing FeatureExtractor here results in a "pure virtual function called" runtime error
-  ImageObject(SIFT detector, SIFT extractor, Mat image)
+  ImageObject(SURF detector, SURF extractor, Mat image)
   {
     originalImage = image;
     if (image.channels() == 1)
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
 
   // See http://stackoverflow.com/questions/16688909/orb-compute-bug-it-removes-all-keypoints-with-a-small-image
   //ORB orb(5000, 1.2f, 8, 14, 0, 2, 0, 14);
-  SIFT sift;
+  SURF surf(2500);
 
   std::vector<ImageObject> trainObjects;
   for (int i = 1; i < 10; i++) // TODO: Remove -1 to use all images as training ones
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
       std::cout<< "Error reading image " << path << std::endl;
       return -1;
     }
-    ImageObject trainObject(sift, sift, img);
+    ImageObject trainObject(surf, surf, img);
     trainObjects.push_back(trainObject);
   }
 
@@ -105,7 +105,7 @@ int main(int argc, char** argv)
     frame = imread(argv[argc - 1]); // TODO: REMOVE ME
 
     auto startFeatures = std::chrono::system_clock::now();
-    ImageObject sceneObject(sift, sift, frame);
+    ImageObject sceneObject(surf, surf, frame);
     auto endFeatures = std::chrono::system_clock::now();
     double elapsedFeatures = std::chrono::duration_cast<std::chrono::duration<double> >(endFeatures - startFeatures).count();
 
@@ -128,7 +128,7 @@ int main(int argc, char** argv)
       std::vector<DMatch> goodMatches;
       for (int i = 0; i < matches.size(); i++)
       {
-        if (matches[i].distance < 180)
+        if (matches[i].distance < 0.3)
         {
           std::cout << "adding point " << (i + 1) << " @ " << matches[i].distance << " from img: " << matches[i].imgIdx << std::endl;
           goodMatches.push_back(matches[i]);
