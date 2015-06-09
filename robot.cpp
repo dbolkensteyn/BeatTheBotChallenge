@@ -98,12 +98,16 @@ int main(int argc, char** argv)
   namedWindow("live", WINDOW_AUTOSIZE);
   for (;;)
   {
-    auto start = std::chrono::system_clock::now();
+    auto startFrame = std::chrono::system_clock::now();
 
     Mat frame;
     cap >> frame;
     frame = imread(argv[argc - 1]); // TODO: REMOVE ME
+
+    auto startFeatures = std::chrono::system_clock::now();
     ImageObject sceneObject(sift, sift, frame);
+    auto endFeatures = std::chrono::system_clock::now();
+    double elapsedFeatures = std::chrono::duration_cast<std::chrono::duration<double> >(endFeatures - startFeatures).count();
 
     // Check for sufficient points to compute homography
     if (sceneObject.keypoints.size() >= 4)
@@ -217,11 +221,11 @@ int main(int argc, char** argv)
       }
     }
 
-    auto end = std::chrono::system_clock::now();
+    auto endFrame = std::chrono::system_clock::now();
 
-    double elapsed = std::chrono::duration_cast<std::chrono::duration<double> >(end - start).count();
+    double elapsedFrame = std::chrono::duration_cast<std::chrono::duration<double> >(endFrame - startFrame).count();
 
-    std::cout << "FPS: " << (1 / elapsed) << std::endl;
+    std::cout << "FPS: " << (1 / elapsedFrame) << " vs " << (1 / elapsedFeatures) << std::endl;
 
     //-- Show the frame
     //resize(frame, frame, Size(0, 0), 0.25, 0.25);
