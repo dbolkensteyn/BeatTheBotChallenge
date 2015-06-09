@@ -98,6 +98,8 @@ int main(int argc, char** argv)
   namedWindow("live", WINDOW_AUTOSIZE);
   for (;;)
   {
+    auto start = std::chrono::system_clock::now();
+
     Mat frame;
     cap >> frame;
     frame = imread(argv[argc - 1]); // TODO: REMOVE ME
@@ -214,6 +216,12 @@ int main(int argc, char** argv)
 #endif
       }
     }
+
+    auto end = std::chrono::system_clock::now();
+
+    double elapsed = std::chrono::duration_cast<std::chrono::duration<double> >(end - start).count();
+
+    std::cout << "FPS: " << (1 / elapsed) << std::endl;
 
     //-- Show the frame
     //resize(frame, frame, Size(0, 0), 0.25, 0.25);
