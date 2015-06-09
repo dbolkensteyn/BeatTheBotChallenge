@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <limits>
+#include <numeric>
 #include "opencv2/core/core.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -171,7 +172,11 @@ int main(int argc, char** argv)
 
       if (translationVectors.size() > 0)
       {
-        Point2f v = translationVectors[0];
+        Point2f translationVectorsSum = std::accumulate(
+                                          translationVectors.begin(), translationVectors.end(),
+                                          Point2f(0.0f, 0.0f));
+
+        Point2f v = translationVectorsSum * (1.0f / translationVectors.size());
 
         std::vector<Point2f> obj_corners(4);
         obj_corners[0] = cvPoint(0, 0);
