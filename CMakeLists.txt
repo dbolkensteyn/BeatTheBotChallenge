@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.0)
+project(AE3DMotor-robot VERSION 0.1)
+find_package(OpenCV REQUIRED)
+add_executable(${PROJECT_NAME} robot.cpp)
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
