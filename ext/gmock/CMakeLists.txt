@@ -3,7 +3,7 @@ project(gmock_builder)
 include(ExternalProject)
 
 ExternalProject_Add(googlemock
-    URL ${CMAKE_SOURCE_DIR}/ext/gmock/gmock-1.7.0.zip
+    URL ${PROJECT_SOURCE_DIR}/gmock-1.7.0.zip
     URL_HASH SHA1=f9d9dd882a25f4069ed9ee48e70aff1b53e3c5a5
     CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
