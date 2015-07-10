@@ -15,11 +15,16 @@ It is made of several parts:
 * The webcam is the eye, enabling the robot to see the moto, trafic, and phone borders
 * An Arduino and a laptop, the two brains... yes the robot has a little advantage :)
 
+By following the instructions on this page, you will be able to build your own robot. And if you're evil enough, you'll improve it to make the challenge even harder for humans :)
+
 ## But... why?
 
-Because we can!
+Because we can, of course!
 
 ## Events
+
+* Lisbon Maker Faire, 18 + 19 + 20 September 2015 - TO BE CONFIRMED
+* World Maker Faire New York, 26 & 27 September 2015 - TO BE CONFIRMED
 
 ## The hardware
 
