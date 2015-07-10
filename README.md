@@ -19,3 +19,12 @@ It is made of several parts:
 
 Because we can!
 
+## Events
+
+## The hardware
+
+## The software
+
+## How to contribute
+
+## Project Milestones
