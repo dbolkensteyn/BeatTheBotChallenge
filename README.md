@@ -23,7 +23,7 @@ Because we can, of course!
 
 ## Events
 
-You can challenge the robot and meet us at the following events:
+Meet the robot and us at the following events:
 
 * Lisbon Maker Faire, 18 + 19 + 20 September 2015 - TO BE CONFIRMED
 * World Maker Faire New York, 26 & 27 September 2015 - TO BE CONFIRMED
