@@ -8,7 +8,7 @@ The point of [AE 3D Motor](http://www.windowsphone.com/en-us/store/app/ae-3d-mot
   <img width="175" src="docs/AE-3D-Motor.png" alt="" />
 </p>
 
-The robot is not simply some smart software: It plays the game just like you!
+The robot is not simply some smart software: It plays the game [almost] just like you!
 
 <p align="center">
   <img width="650" src="docs/BeatTheBotChallenge.jpg" alt="" />
