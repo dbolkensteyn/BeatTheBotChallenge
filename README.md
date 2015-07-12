@@ -1,4 +1,4 @@
-# BeatTheBot
+# BeatTheBot: Can humans still beat robots?
 
 BeatTheBot is a challenge where humans compete against a robot to play the [AE 3D Motor](http://www.windowsphone.com/en-us/store/app/ae-3d-motor/bb5f1317-735d-4e60-a100-9c3f1692ee7c) mobile phone game.
 
