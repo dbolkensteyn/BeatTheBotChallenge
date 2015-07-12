@@ -11,7 +11,7 @@ The point of [AE 3D Motor](http://www.windowsphone.com/en-us/store/app/ae-3d-mot
 The robot is not simply some smart software: It plays the game just like you!
 
 <p align="center">
-  <img width="400" src="docs/BeatTheBotChallenge.png" alt="" />
+  <img width="400" src="docs/BeatTheBotChallenge.jpg" alt="" />
 </p>
 
 It is made of several parts:
