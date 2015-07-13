@@ -24,11 +24,12 @@ By following the instructions on this page, you will be able to build your own r
 ## But... why?
 
 Because we can, of course!
-More seriously, the idea of this project came as a way to get familiar with computer vision, and this project is a milestone on the way to some bigger things around agricultural robots.
+More seriously, the idea of this project came as a way to get familiar with computer vision, and this project is for me a learning milestone on the way to bigger things around agricultural robots.
+My hope is that this project will inspire others to experiment and follow their dreams.
 
 ## Events
 
-Meet the robot and us at the following events:
+Meet the robot and me at the following events:
 
 * Lisbon Maker Faire, 18 + 19 + 20 September 2015 - TO BE CONFIRMED
 * World Maker Faire New York, 26 & 27 September 2015 - TO BE CONFIRMED
