@@ -24,7 +24,8 @@ By following the instructions on this page, you will be able to build your own r
 ## But... why?
 
 Because we can, of course!
-More seriously, the idea of this project came as a way to get familiar with computer vision, and this project is for me a learning milestone on the way to bigger things around agricultural robots.
+More seriously, the idea of this project came to me as a way to get familiar with computer vision, and this project is a learning milestone on the way to bigger things around agricultural robots.
+
 My hope is that this project will inspire others to experiment and follow their dreams.
 
 ## Events
