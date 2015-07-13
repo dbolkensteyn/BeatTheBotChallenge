@@ -35,11 +35,11 @@ Meet the robot and me at the following events:
 * Lisbon Maker Faire, 18 + 19 + 20 September 2015 - TO BE CONFIRMED
 * World Maker Faire New York, 26 & 27 September 2015 - TO BE CONFIRMED
 
-## The hardware
+## Hardware
 
 I highly recommend to start from [The Arduino Starter Kit](https://www.arduino.cc/en/Main/ArduinoStarterKit), which includes the Arduino Uno, the servo motor and all the cables & connectors used in this project. Most importantly, it also comes with a book of many projects ideas to discover and familiarize yourself with the complete kit contents.
 
-## The software
+## Software
 
 TODO
 
