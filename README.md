@@ -45,7 +45,7 @@ TODO
 ## How to contribute
 
 Code contributions are accepted through pull requests.
-Feel free to create GitHub issues for other kind of contributions such as ideas etc.
+Other types of contributions such as ideas etc. should be sent through GitHub issues.
 
 ## Project Milestones
 
