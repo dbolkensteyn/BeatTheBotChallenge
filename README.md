@@ -24,6 +24,7 @@ By following the instructions on this page, you will be able to build your own r
 ## But... why?
 
 Because we can, of course!
+More seriously, the idea of this project came as a way to get familiar with computer vision, and this project is a milestone on the way to some bigger things around agricultural robots.
 
 ## Events
 
@@ -34,8 +35,17 @@ Meet the robot and us at the following events:
 
 ## The hardware
 
+TODO
+
 ## The software
+
+TODO
 
 ## How to contribute
 
+Code contributions are accepted through pull requests.
+Feel free to create GitHub issues for other kind of contributions such as ideas etc.
+
 ## Project Milestones
+
+TODO
