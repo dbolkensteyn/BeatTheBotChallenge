@@ -37,7 +37,7 @@ Meet the robot and me at the following events:
 
 ## The hardware
 
-TODO
+I highly recommend to start from [The Arduino Starter Kit](https://www.arduino.cc/en/Main/ArduinoStarterKit), which includes an Arduino Uno, many components including the servo motor used in this project and all required cables & connectors. Moreover, it comes with a book of projects ideas to discover the kit and become familiar with all of its contents.
 
 ## The software
 
@@ -48,6 +48,6 @@ TODO
 Code contributions are accepted through pull requests.
 Other types of contributions such as ideas etc. should be sent through GitHub issues.
 
-## Project Milestones
+## Project milestones
 
 TODO
