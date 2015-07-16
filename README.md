@@ -45,9 +45,15 @@ My phone is a [Nokia Lumia 920](http://www.microsoft.com/en-us/mobile/phone/lumi
 
 The laptop I use is a MacBook Air, but any computer will do: The software is written to easily work on Windows, Linux, Mac and more.
 
+[TODO: How to build the structure]
+
 ## Software
 
-TODO
+[TODO: How responsibilites are split]
+
+[TODO: Arduino part]
+
+[TODO: OpenCV C++ part]
 
 ## How to contribute
 
