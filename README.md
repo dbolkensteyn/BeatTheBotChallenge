@@ -1,8 +1,8 @@
 # BeatTheBot: Can humans still beat robots?
 
-BeatTheBot is a challenge where humans compete against a robot to play the [AE 3D Motor](http://www.windowsphone.com/en-us/store/app/ae-3d-motor/bb5f1317-735d-4e60-a100-9c3f1692ee7c) mobile phone game.
+BeatTheBot is a challenge where humans compete against a robot to play the free and popular AE 3D Motor game: download it for [Windows Phone](http://www.windowsphone.com/en-us/store/app/ae-3d-motor/bb5f1317-735d-4e60-a100-9c3f1692ee7c), [Android](https://play.google.com/store/apps/details?id=com.aemobile.games.aemotor3d) or [iPhone](https://itunes.apple.com/us/app/ae-3d-motor/id543841287?mt=8).
 
-The point of [AE 3D Motor](http://www.windowsphone.com/en-us/store/app/ae-3d-motor/bb5f1317-735d-4e60-a100-9c3f1692ee7c) is to accumulate points by driving a moto as fast and as long as possible while quickly tilting the phone left and right to zig-zag through trafic.
+The point of AE 3D Motor is to accumulate points by driving a moto as fast and as long as possible while quickly tilting the phone left and right to zig-zag through trafic.
 
 <p align="center">
   <img width="175" src="docs/AE-3D-Motor.png" alt="" />
@@ -39,7 +39,11 @@ Meet the robot and me at the following events:
 
 I recommend to start from [The Arduino Starter Kit](https://www.arduino.cc/en/Main/ArduinoStarterKit), which includes the Arduino Uno, the servo motor and all the cables & connectors used in this project. Most importantly, it also comes with a book of many projects ideas to discover and familiarize yourself with the complete kit contents.
 
-[Logitech Webcam C170](http://www.logitech.com/product/webcam-c170) was the cheapest webcam I found. Later on I realized that the videos were blur because it lacks auto-focus. However, this did not impact the performances of the moto detection algorithm, and I still am using this model.
+[Logitech Webcam C170](http://www.logitech.com/product/webcam-c170) is the cheapest webcam I found. I later realized that the videos were blur because it lacks auto-focus. However, this did not impact the performances of the moto detection algorithm, and I still am using this model today.
+
+My phone is a [Nokia Lumia 920](http://www.microsoft.com/en-us/mobile/phone/lumia920/) running Windows Phone, and so I am playing the Windows Phone version of the game.
+
+The laptop I use is a MacBook Air, but any computer will do: The software is written to easily work on Windows, Linux, Mac and more.
 
 ## Software
 
