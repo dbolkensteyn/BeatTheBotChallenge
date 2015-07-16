@@ -39,6 +39,8 @@ Meet the robot and me at the following events:
 
 I recommend to start from [The Arduino Starter Kit](https://www.arduino.cc/en/Main/ArduinoStarterKit), which includes the Arduino Uno, the servo motor and all the cables & connectors used in this project. Most importantly, it also comes with a book of many projects ideas to discover and familiarize yourself with the complete kit contents.
 
+[Logitech Webcam C170](http://www.logitech.com/product/webcam-c170) was the cheapest webcam I found. Later on I realized that the videos were blur because it lacks auto-focus. However, this did not impact the performances of the moto detection algorithm, and I still am using this model.
+
 ## Software
 
 TODO
