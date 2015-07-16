@@ -41,7 +41,7 @@ I recommend to start from [The Arduino Starter Kit](https://www.arduino.cc/en/Ma
 
 [Logitech Webcam C170](http://www.logitech.com/product/webcam-c170) is the cheapest webcam I found. I later realized that the videos were blur because it lacks auto-focus. However, this did not impact the performances of the moto detection algorithm, and I still am using this model today.
 
-My phone is a [Nokia Lumia 920](http://www.microsoft.com/en-us/mobile/phone/lumia920/) running Windows Phone, and so I am playing the Windows Phone version of the game.
+My phone is a [Nokia Lumia 920](http://www.microsoft.com/en-us/mobile/phone/lumia920/) running Windows Phone, and so I am playing the [Windows Phone version](http://www.windowsphone.com/en-us/store/app/ae-3d-motor/bb5f1317-735d-4e60-a100-9c3f1692ee7c) of the game, which might be a bit different from the [Android](https://play.google.com/store/apps/details?id=com.aemobile.games.aemotor3d) and [iPhone](https://itunes.apple.com/us/app/ae-3d-motor/id543841287?mt=8) ones.
 
 The laptop I use is a MacBook Air, but any computer will do: The software is written to easily work on Windows, Linux, Mac and more.
 
