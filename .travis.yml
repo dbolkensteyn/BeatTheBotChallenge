@@ -1,15 +1,25 @@
 language: cpp
+sudo: false
 
 compiler:
   - gcc
 
 install:
-  - sudo apt-get install libopencv-dev libcv-dev libopencv-features2d-dev libhighgui-dev
+  - OPENCV_VERSION=2.4.10.1
+  - wget -O opencv-${OPENCV_VERSION}.zip http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/${OPENCV_VERSION}/opencv-${OPENCV_VERSION}.zip && unzip opencv-${OPENCV_VERSION}.zip
+  - mkdir opencv-bin
+  - cd opencv-$OPENCV_VERSION
+  - mkdir build
+  - cd build
+  - cmake .. -DCMAKE_INSTALL_PREFIX=../../opencv-bin
+  - make
+  - make install
+  - cd ../..
 
 before_script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake .. -DOpenCV_DIR=`pwd`/../opencv-bin/share/OpenCV/
 
 script:
   - cmake --build .
