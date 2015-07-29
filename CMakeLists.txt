@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 # Main
-project(BeatTheBotChallenge VERSION 0.1)
+project(BeatTheBotChallenge)
 find_package(OpenCV REQUIRED)
 add_executable(${PROJECT_NAME} src/main/robot.cpp)
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
