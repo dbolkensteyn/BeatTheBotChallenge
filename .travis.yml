@@ -3,11 +3,14 @@ language: cpp
 compiler:
   - gcc
 
+install:
+  - sudo apt-get install libopencv-dev libcv-dev libopencv-features2d-dev libhighgui-dev
+
 before_script:
   - mkdir build
   - cd build
   - cmake ..
 
 script:
-  - cmake .
+  - cmake --build .
   - ctest
