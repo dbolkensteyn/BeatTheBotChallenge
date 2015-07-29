@@ -1,5 +1,5 @@
 [![alt text][1.1]][1]
-[1.1]: docs/twitter.png (twitter icon with padding)
+[1.1]: documentation/twitter.png (twitter icon with padding)
 [1]: http://www.twitter.com/BTBMaker
 # BeatTheBot: Can humans still beat robots?
 
@@ -8,13 +8,13 @@ BeatTheBot is a challenge where humans compete against a robot to play the free 
 The point of AE 3D Motor is to accumulate points by driving a moto as fast and as long as possible while quickly tilting the phone left and right to zig-zag through trafic.
 
 <p align="center">
-  <img width="175" src="docs/AE-3D-Motor.png" alt="" />
+  <img width="175" src="documentation/AE-3D-Motor.png" alt="" />
 </p>
 
 The robot is not simply some smart software: It plays the game [almost] just like you!
 
 <p align="center">
-  <img width="650" src="docs/BeatTheBotChallenge.jpg" alt="" />
+  <img width="650" src="documentation/BeatTheBotChallenge.jpg" alt="" />
 </p>
 
 It is made of several parts:

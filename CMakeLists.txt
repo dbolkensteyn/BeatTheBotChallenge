@@ -3,16 +3,16 @@ cmake_minimum_required(VERSION 3.0)
 # Main
 project(BeatTheBotChallenge VERSION 0.1)
 find_package(OpenCV REQUIRED)
-add_executable(${PROJECT_NAME} robot.cpp)
+add_executable(${PROJECT_NAME} src/main/robot.cpp)
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 # Test
-add_subdirectory(ext/gmock)
+add_subdirectory(src/ext/gmock)
 enable_testing()
 set(TEST_PROJECT_NAME ${PROJECT_NAME}Tests)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-add_executable(${TEST_PROJECT_NAME} test.cpp)
+add_executable(${TEST_PROJECT_NAME} src/test/test.cpp)
 add_dependencies(${TEST_PROJECT_NAME} googlemock)
 
 if(NOT WIN32)
