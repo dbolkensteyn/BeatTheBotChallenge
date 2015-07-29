@@ -5,7 +5,7 @@ compiler:
   - gcc
 
 install:
-  - OPENCV_VERSION=2.4.10.1
+  - OPENCV_VERSION=2.4.10
   - wget -O opencv-${OPENCV_VERSION}.zip http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/${OPENCV_VERSION}/opencv-${OPENCV_VERSION}.zip && unzip opencv-${OPENCV_VERSION}.zip
   - mkdir opencv-bin
   - cd opencv-$OPENCV_VERSION
