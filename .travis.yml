@@ -4,8 +4,11 @@ sudo: false
 compiler:
   - gcc
 
-before_script:
-  - bii init -L
+install:
+  - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
+  - bii setup:cpp
+  - bii --version
 
 script:
+  - bii init -L
   - bii build
