@@ -2,7 +2,7 @@ language: cpp
 sudo: true
 
 compiler:
-  - gcc
+  - clang
 
 install:
   - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
