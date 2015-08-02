@@ -1,6 +1,11 @@
 # CMake
 /build*
 
+# Biicode
+CMakeLists.txt
+bii/
+bin/
+
 # ---- Mac OS X
 .DS_Store
 Icon?

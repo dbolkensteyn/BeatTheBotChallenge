@@ -4,23 +4,8 @@ sudo: false
 compiler:
   - gcc
 
-install:
-  - OPENCV_VERSION=2.4.10
-  - wget -O opencv-${OPENCV_VERSION}.zip http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/${OPENCV_VERSION}/opencv-${OPENCV_VERSION}.zip && unzip opencv-${OPENCV_VERSION}.zip
-  - mkdir opencv-bin
-  - cd opencv-$OPENCV_VERSION
-  - mkdir build
-  - cd build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=../../opencv-bin
-  - make
-  - make install
-  - cd ../..
-
 before_script:
-  - mkdir build
-  - cd build
-  - cmake .. -DOpenCV_DIR=`pwd`/../opencv-bin/share/OpenCV/
+  - bii init -L
 
 script:
-  - cmake --build .
-  - ctest
+  - bii build
