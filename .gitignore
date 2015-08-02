@@ -2,7 +2,6 @@
 /build*
 
 # Biicode
-CMakeLists.txt
 bii/
 bin/
 

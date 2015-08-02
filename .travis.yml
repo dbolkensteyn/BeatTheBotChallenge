@@ -12,3 +12,6 @@ install:
 script:
   - bii init -L
   - bii build
+
+notifications:
+  email: false
