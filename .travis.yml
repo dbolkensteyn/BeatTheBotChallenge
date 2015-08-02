@@ -24,6 +24,8 @@ install:
 
 script:
   - bii init -L
+  - bii find
+  - bii configure
   - bii build
 
 cache:
