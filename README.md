@@ -1,7 +1,6 @@
-[![alt text][1.1]][1]
-[1.1]: documentation/twitter.png (twitter icon with padding)
-[1]: http://www.twitter.com/BTBMaker
 # BeatTheBot: Can humans still beat robots?
+
+[![Build Status](https://travis-ci.org/dbolkensteyn/BeatTheBotChallenge.svg?branch=master)](https://travis-ci.org/dbolkensteyn/BeatTheBotChallenge) | [@BTBMaker](http://www.twitter.com/BTBMaker)
 
 BeatTheBot is a challenge where humans compete against a robot to play the free and popular AE 3D Motor game: play it on [Windows Phone](http://www.windowsphone.com/en-us/store/app/ae-3d-motor/bb5f1317-735d-4e60-a100-9c3f1692ee7c), [Android](https://play.google.com/store/apps/details?id=com.aemobile.games.aemotor3d) or [iPhone](https://itunes.apple.com/us/app/ae-3d-motor/id543841287?mt=8).
 
