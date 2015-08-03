@@ -12,6 +12,8 @@ using namespace cv;
 #define HEIGHT 512 // 0.8 * WIDTH
 #define IMAGES 1
 
+std::string to_string2(int i);
+
 int main()
 {
     VideoCapture cap(0); // open the default camera
@@ -60,10 +62,17 @@ int main()
         if (waitKey(30) >= 0)
         {
         	counter++;
-        	imwrite("webcam_" + std::to_string(counter) + ".png", calculatedFrame);
+        	imwrite("webcam_" + to_string2(counter) + ".png", calculatedFrame);
         	std::cout << "image written!" << std::endl;
         }
     }
     // the camera will be deinitialized automatically in VideoCapture destructor
     return 0;
+}
+
+std::string to_string2(int i)
+{
+  std::stringstream ss;
+  ss << i;
+  return ss.str();
 }

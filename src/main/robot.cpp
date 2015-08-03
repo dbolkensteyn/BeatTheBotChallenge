@@ -48,6 +48,7 @@ public:
 
 bool isBlack(Vec3b v);
 bool isBlackLine(Mat &im, Point2f p);
+std::string to_string(int i);
 
 bool DMatchSorter(const DMatch& left, const DMatch& right)
 {
@@ -74,7 +75,7 @@ int main(int argc, char** argv)
     {
       continue;
     }
-    std::string path = std::string("c170_day/") + std::to_string(i) + std::string(".png");
+    std::string path = std::string("c170_day/") + to_string(i) + std::string(".png");
     //char* path = argv[i];
     std::cout << "Loading training image: " << path << std::endl;
     Mat img = imread(path);
@@ -247,4 +248,11 @@ bool isBlackLine(Mat &im, Point2f p)
     }
   }
   return true;
+}
+
+std::string to_string(int i)
+{
+  std::stringstream ss;
+  ss << i;
+  return ss.str();
 }
