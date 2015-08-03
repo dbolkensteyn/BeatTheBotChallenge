@@ -10,7 +10,7 @@ install:
   - bii --version
 
 script:
-  - bii init
+  - bii init -L
   - bii build
   - ./bin/MotoDetectionTest
 
