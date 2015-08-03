@@ -89,9 +89,9 @@ int main(int argc, char** argv)
   }
 
   std::vector<Mat> trainDescriptors;
-  for (auto &trainObject: trainObjects)
+  for(std::vector<ImageObject>::iterator it = trainObjects.begin(); it != trainObjects.end(); ++it)
   {
-    trainDescriptors.push_back(trainObject.descriptors);
+    trainDescriptors.push_back(it->descriptors);
   }
   BFMatcher matcher; // TODO: BFMatcher vs FlannBasedMatcher
   matcher.add(trainDescriptors);
