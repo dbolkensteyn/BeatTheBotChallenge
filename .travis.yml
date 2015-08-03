@@ -15,9 +15,5 @@ script:
   - bii configure
   - bii build
 
-cache:
-  directories:
-    - '$HOME/.biicode'
-
 notifications:
   email: false
