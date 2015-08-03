@@ -1,6 +1,6 @@
-LIST(REMOVE_ITEM BII_src_main_BeatTheBotChallenge_SRC src/main/BeatTheBotChallengeTrainer.cpp)
+SET(BII_src_main_BeatTheBotChallenge_SRC src/main/BeatTheBotChallenge.cpp)
 
-LIST(REMOVE_ITEM BII_src_main_BeatTheBotChallengeTrainer_SRC src/main/BeatTheBotChallenge.cpp)
+SET(BII_src_main_BeatTheBotChallengeTrainer_SRC src/main/BeatTheBotChallengeTrainer.cpp)
 
 ADD_BII_TARGETS()
 
