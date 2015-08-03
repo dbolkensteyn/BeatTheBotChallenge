@@ -1,0 +1,7 @@
+ADD_BII_TARGETS()
+
+SET_TARGET_PROPERTIES(${BII_src_main_BeatTheBotChallenge_TARGET} PROPERTIES OUTPUT_NAME BeatTheBotChallenge)
+
+SET_TARGET_PROPERTIES(${BII_src_main_BeatTheBotChallengeTrainer_TARGET} PROPERTIES OUTPUT_NAME BeatTheBotChallengeTrainer)
+
+SET_TARGET_PROPERTIES(${BII_src_test_MotoDetectionTest_TARGET} PROPERTIES OUTPUT_NAME MotoDetectionTest)

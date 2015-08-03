@@ -4,7 +4,6 @@
 # Biicode
 bii/
 bin/
-/CMakeLists.txt
 
 # ---- Mac OS X
 .DS_Store
