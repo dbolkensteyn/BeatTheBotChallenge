@@ -12,7 +12,7 @@ install:
 script:
   - bii init -L
   - bii build
-  - ./bin/MotoDetectionTest
+  - bii test
 
 notifications:
   email: false
