@@ -1,5 +1,3 @@
-// g++ webcam.cpp -o webcam `pkg-config --cflags --libs opencv` && ./webcam
-
 #include <iostream>
 #include "opencv2/opencv.hpp"
  
@@ -12,7 +10,7 @@ using namespace cv;
 #define HEIGHT 512 // 0.8 * WIDTH
 #define IMAGES 1
 
-std::string to_string2(int i);
+std::string to_string(int i);
 
 int main()
 {
@@ -62,7 +60,7 @@ int main()
         if (waitKey(30) >= 0)
         {
         	counter++;
-        	imwrite("webcam_" + to_string2(counter) + ".png", calculatedFrame);
+        	imwrite("webcam_" + to_string(counter) + ".png", calculatedFrame);
         	std::cout << "image written!" << std::endl;
         }
     }
@@ -70,7 +68,7 @@ int main()
     return 0;
 }
 
-std::string to_string2(int i)
+std::string to_string(int i)
 {
   std::stringstream ss;
   ss << i;

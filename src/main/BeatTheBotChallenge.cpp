@@ -1,5 +1,3 @@
-// g++ robot.cpp -Wc++11-extensions -o robot `pkg-config --cflags --libs opencv`
-
 #include <stdio.h>
 #include <iostream>
 #include <limits>

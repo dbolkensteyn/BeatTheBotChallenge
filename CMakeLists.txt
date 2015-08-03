@@ -1,3 +1,7 @@
+LIST(REMOVE_ITEM BII_src_main_BeatTheBotChallenge_SRC src/main/BeatTheBotChallengeTrainer.cpp)
+
+LIST(REMOVE_ITEM BII_src_main_BeatTheBotChallengeTrainer_SRC src/main/BeatTheBotChallenge.cpp)
+
 ADD_BII_TARGETS()
 
 SET_TARGET_PROPERTIES(${BII_src_main_BeatTheBotChallenge_TARGET} PROPERTIES OUTPUT_NAME BeatTheBotChallenge)
