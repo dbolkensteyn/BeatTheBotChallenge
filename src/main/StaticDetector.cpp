@@ -7,9 +7,9 @@
 
 BTB::ProcessedImage::ProcessedImage(cv::SURF algo, cv::Mat image) :
   keypoints(),
-  descriptors(),
-  greyImage()
+  descriptors()
 {
+  cv::Mat greyImage;
   if (image.channels() == 1)
   {
     greyImage = image;

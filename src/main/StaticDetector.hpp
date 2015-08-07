@@ -12,7 +12,6 @@ namespace BTB
     ProcessedImage(cv::SURF algo, cv::Mat image);
     std::vector<cv::KeyPoint> keypoints;
     cv::Mat descriptors;
-    cv::Mat greyImage;
   };
 
   class StaticDetector
