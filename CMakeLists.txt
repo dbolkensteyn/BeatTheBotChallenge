@@ -1,11 +1,10 @@
-SET(BII_src_main_BeatTheBotChallenge_SRC src/main/BeatTheBotChallenge.cpp)
-
-SET(BII_src_main_BeatTheBotChallengeTrainer_SRC src/main/BeatTheBotChallengeTrainer.cpp)
-
 ADD_BII_TARGETS()
 
+# BeatTheBotChallenge
 SET_TARGET_PROPERTIES(${BII_src_main_BeatTheBotChallenge_TARGET} PROPERTIES OUTPUT_NAME BeatTheBotChallenge)
 
+# BeatTheBotChallengeTrainer
 SET_TARGET_PROPERTIES(${BII_src_main_BeatTheBotChallengeTrainer_TARGET} PROPERTIES OUTPUT_NAME BeatTheBotChallengeTrainer)
 
-SET_TARGET_PROPERTIES(${BII_src_test_MotoDetectionTest_TARGET} PROPERTIES OUTPUT_NAME MotoDetectionTest)
+# StaticDetectorTest
+SET_TARGET_PROPERTIES(${BII_src_test_StaticDetectorTest_TARGET} PROPERTIES OUTPUT_NAME StaticDetectorTest)
