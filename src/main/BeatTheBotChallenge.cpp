@@ -1,7 +1,7 @@
-#include <iostream>
-
-#include "opencv2/opencv.hpp"
 #include "StaticDetector.hpp"
+
+#include <iostream>
+#include "opencv2/opencv.hpp"
 
 int main(int argc, char** argv)
 {
@@ -12,23 +12,7 @@ int main(int argc, char** argv)
     return -1;
   }
 
-  BTB::StaticDetector detector;
-  for (int i = 1; i < 10; i++)
-  {
-    std::stringstream path;
-    path << "database/training/";
-    path << i;
-    path << ".png";
-    std::cout << "Loading training image: " << path.str() << std::endl;
-
-    cv::Mat image = cv::imread(path.str());
-    if (!image.data)
-    {
-      std::cout<< "Error reading image " << path.str() << std::endl;
-      return -1;
-    }
-    detector.addTrainImage(image);
-  }
+  BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("database/training/");
 
   cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
   for (;;)

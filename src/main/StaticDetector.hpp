@@ -1,6 +1,8 @@
 #ifndef __BTB_STATIC_DETECTOR__
 #define __BTB_STATIC_DETECTOR__
 
+#include <string>
+#include <vector>
 #include "opencv2/opencv.hpp"
 #include "opencv2/nonfree/features2d.hpp"
 
@@ -18,6 +20,7 @@ namespace BTB
   {
   public:
     StaticDetector();
+    static StaticDetector CreateFromTrainFolder(std::string path);
     void addTrainImage(cv::Mat image);
     cv::Point2f detectIn(cv::Mat image);
     cv::Size getTrainImageSize();

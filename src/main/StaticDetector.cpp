@@ -1,4 +1,5 @@
 #include "StaticDetector.hpp"
+#include "Files.hpp"
 
 #include <numeric>
 #include <stdexcept>
@@ -29,6 +30,25 @@ BTB::StaticDetector::StaticDetector() :
   trainImageSize(),
   matcher()
 {
+}
+
+BTB::StaticDetector BTB::StaticDetector::CreateFromTrainFolder(std::string path)
+{
+  BTB::StaticDetector result;
+
+  std::vector<std::string> filenames = BTB::GetFilesIn(path);
+  for(std::vector<std::string>::iterator it = filenames.begin(); it != filenames.end(); ++it)
+  {
+    std::string filename = *it;
+    cv::Mat image = cv::imread(path + "/" + filename);
+    if (!image.data)
+    {
+      throw std::logic_error("error loading: " + path + "/" + filename);
+    }
+    result.addTrainImage(image);
+  }
+
+  return result;
 }
 
 void BTB::StaticDetector::addTrainImage(cv::Mat image)
