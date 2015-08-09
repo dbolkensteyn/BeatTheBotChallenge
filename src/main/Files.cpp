@@ -1,5 +1,6 @@
 #include "Files.hpp"
 
+#include <stdexcept>
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
