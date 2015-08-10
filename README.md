@@ -34,8 +34,8 @@ My hope is that this project will inspire others to experiment and follow their 
 
 Meet the robot and me at the following events:
 
-* Lisbon Maker Faire, 18 + 19 + 20 September 2015 - TO BE CONFIRMED
-* World Maker Faire New York, 26 & 27 September 2015 - CONFIRMED
+* Lisbon Maker Faire, 18 + 19 + 20 September 2015 - **CONFIRMED**
+* World Maker Faire New York, 26 & 27 September 2015 - **CONFIRMED**
 
 ## Hardware
 
