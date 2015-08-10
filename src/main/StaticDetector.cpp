@@ -87,7 +87,7 @@ bool DMatchSorter(const cv::DMatch& left, const cv::DMatch& right)
   return left.distance < right.distance;
 }
 
-cv::Point2f BTB::StaticDetector::detectIn(cv::Mat image)
+bool BTB::StaticDetector::detectIn(cv::Mat image, cv::Point2f &out)
 {
   ProcessedImage processedSceneImage(algo, image);
 
@@ -129,12 +129,13 @@ cv::Point2f BTB::StaticDetector::detectIn(cv::Mat image)
 
   if (translationVectors.empty())
   {
-    return cv::Point2f(0, 0);
+    return false;
   }
 
   cv::Point2f translationVectorsSum = std::accumulate(
                                           translationVectors.begin(), translationVectors.end(),
                                           cv::Point2f(0.0f, 0.0f));
 
-  return translationVectorsSum * (1.0f / translationVectors.size());
+  out = translationVectorsSum * (1.0f / translationVectors.size());
+  return true;
 }

@@ -92,6 +92,7 @@ TEST(staticDetector, nonregression)
   BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/");
 
   int matches = 0;
+  int mismatches = 0;
   std::vector<std::string> testImageFilenames = BTB::GetFilesIn("../../../database/testing/");
   for (std::vector<std::string>::iterator it = testImageFilenames.begin(); it != testImageFilenames.end(); ++it)
   {
@@ -103,25 +104,33 @@ TEST(staticDetector, nonregression)
     cv::Mat templateImage = loadImage("../../../database/full/" + imageNumber + ".png");
 
     cv::Point2f expected = findExactMatch(testImage, templateImage);
-    cv::Point2f actual = detector.detectIn(testImage);
 
+    cv::Point2f actual;
+    bool matched = detector.detectIn(testImage, actual);
     double distance = cv::norm(expected - actual);
-    if (distance <= MAX_MATCH_THRESHOLD)
+
+    if (matched && distance <= MAX_MATCH_THRESHOLD)
     {
       matches++;
-      std::cout << "MATCH";
+      std::cout << "MATCH, distance = " << distance << std::endl;
       EXPECT_TRUE(expectedMatches.find(imageNumber) != expectedMatches.end()) << "Image " << imageNumber << " is an unexpected match!";
     }
     else
     {
-      std::cout << "MISMATCH";
+      if (matched)
+      {
+        mismatches++;
+        std::cout << "MISMATCH, distance = " << distance << std::endl;
+      }
+      else
+      {
+        std::cout << "NO MATCH" << std::endl;
+      }
       EXPECT_TRUE(expectedMatches.find(imageNumber) == expectedMatches.end()) << "Image " << imageNumber << " was expected to match but did not!";
     }
-    std::cout << ", distance = " << distance;
-    std::cout << std::endl;
   }
 
-  std::cout << "Matches: " << matches << ", Total: " << testImageFilenames.size() << ", Performance: " << (((double)matches / testImageFilenames.size()) * 100) << "%" << std::endl;
+  std::cout << "Matches: " << matches << ", Mismatches: " << mismatches << ", Total: " << testImageFilenames.size() << ", Matching rate: " << (((double)matches / testImageFilenames.size()) * 100) << "%" << ", Mismatching rate: " << (((double)mismatches / testImageFilenames.size()) * 100) << "%" << std::endl;
 }
 
 int main(int argc, char **argv) {
