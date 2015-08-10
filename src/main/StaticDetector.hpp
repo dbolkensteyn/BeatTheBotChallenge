@@ -1,5 +1,5 @@
-#ifndef __BTB_STATIC_DETECTOR__
-#define __BTB_STATIC_DETECTOR__
+#ifndef __BTB_STATIC_DETECTOR_H__
+#define __BTB_STATIC_DETECTOR_H__
 
 #include <string>
 #include <vector>
