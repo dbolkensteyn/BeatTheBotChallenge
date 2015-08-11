@@ -10,9 +10,7 @@ install:
   - bii --version
 
 script:
-  - bii init -L
-  - bii build
-  - bii test
+  - bii init -L && bii build && bii test
 
 notifications:
   email: false
