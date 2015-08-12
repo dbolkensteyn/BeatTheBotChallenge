@@ -1,5 +1,6 @@
 #include "StaticDetector.hpp"
 #include "PhoneBorderDetector.hpp"
+#include "Serial.hpp"
 
 #include <iostream>
 #include <stdexcept>
@@ -7,6 +8,20 @@
 
 int main(int argc, char** argv)
 {
+  std::cout << "Opening serial port..." << std::endl;
+  BTB::Serial serial("/dev/cu.usbmodemfd121");
+  std::cout << "Serial port opened!" << std::endl;
+  std::cout << "Banner: " << serial.readLine() << std::endl;
+  while (true)
+  {
+    std::cout << "Enter input to send: ";
+    std::string line;
+    std::getline(std::cin, line);
+    serial.writeLine(line);
+    std::cout << serial.readLine() << std::endl;
+  }
+  return 0;
+
   cv::VideoCapture cap(0);
   if (!cap.isOpened())
   {
