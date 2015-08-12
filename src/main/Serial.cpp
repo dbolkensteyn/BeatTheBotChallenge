@@ -9,15 +9,25 @@
 #define BAUDRATE B9600
 
 // Mac users: Use "/dev/cu.xxx", not "/dev/tty.xxx"!
-BTB::Serial::Serial(const std::string &port)
+BTB::SerialPort::SerialPort(const std::string &port)
 {
   fd = open(port.c_str(), O_RDWR | O_CLOEXEC | O_NOCTTY);
   if (fd < 0)
   {
     throw std::logic_error("open");
   }
+}
 
-  if (tcgetattr(fd, &oldtio) != 0)
+BTB::SerialPort::~SerialPort()
+{
+  close(fd);
+}
+
+// Mac users: Use "/dev/cu.xxx", not "/dev/tty.xxx"!
+BTB::Serial::Serial(const std::string &port) :
+  serialPort(port)
+{
+  if (tcgetattr(serialPort.fd, &oldtio) != 0)
   {
     throw std::logic_error("tcgetattr");
   }
@@ -36,12 +46,12 @@ BTB::Serial::Serial(const std::string &port)
   newtio.c_cc[VMIN] = 1;
   newtio.c_cc[VTIME] = 0;
 
-  if (tcflush(fd, TCIFLUSH) != 0)
+  if (tcflush(serialPort.fd, TCIFLUSH) != 0)
   {
     throw std::logic_error("tcflush");
   }
 
-  if (tcsetattr(fd, TCSANOW, &newtio) != 0)
+  if (tcsetattr(serialPort.fd, TCSANOW, &newtio) != 0)
   {
     throw std::logic_error("tcsetattr");
   }
@@ -53,7 +63,7 @@ std::string BTB::Serial::readLine()
 
   // TODO: Not very efficient - but does the job
   char c, r;
-  while ((r = read(fd, &c, 1)) == 1 && c != '\n')
+  while ((r = read(serialPort.fd, &c, 1)) == 1 && c != '\n')
   {
     ss << c;
   }
@@ -67,12 +77,12 @@ std::string BTB::Serial::readLine()
 
 void BTB::Serial::writeLine(std::string line)
 {
-  if (write(fd, line.c_str(), line.length()) != line.length())
+  if (write(serialPort.fd, line.c_str(), line.length()) != line.length())
   {
     throw std::logic_error("write");
   }
   const char lf = '\n';
-  if (write(fd, &lf, 1) != 1)
+  if (write(serialPort.fd, &lf, 1) != 1)
   {
     throw std::logic_error("write");
   }
@@ -80,7 +90,6 @@ void BTB::Serial::writeLine(std::string line)
 
 BTB::Serial::~Serial()
 {
-  tcflush(fd, TCIOFLUSH);
-  tcsetattr(fd, TCSANOW, &oldtio);
-  close(fd);
+  tcflush(serialPort.fd, TCIOFLUSH);
+  tcsetattr(serialPort.fd, TCSANOW, &oldtio);
 }
