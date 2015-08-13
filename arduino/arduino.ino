@@ -2,7 +2,7 @@
 
 Servo myServo;
 const int level = 113;
-const int shift = 6;
+const int safeDelta = 30;
 String readLineBuffer = "";
 
 // the setup function runs once when you press reset or power the board
@@ -27,7 +27,12 @@ void loop() {
   while (Serial.available() > 0) {
     char c = Serial.read();
     if (c == '\n') {
-      Serial.println("Arduino received: " + readLineBuffer);
+      int angle = readLineBuffer.toInt();
+
+      // Safety
+      if (angle >= level - safeDelta && angle <= level + safeDelta) {
+        myServo.write(angle);
+      }
       readLineBuffer = "";
     } else {
       readLineBuffer += c;
