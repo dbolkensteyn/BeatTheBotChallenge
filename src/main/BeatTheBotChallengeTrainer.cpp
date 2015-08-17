@@ -25,29 +25,26 @@ int main()
   std::cout << "Webcam FOURCC: " << cap.get(CV_CAP_PROP_FOURCC) << std::endl;
   std::cout << "Webcam Format: " << cap.get(CV_CAP_PROP_FORMAT) << std::endl;
 
-  cv::namedWindow("webcam", cv::WINDOW_AUTOSIZE);
+  cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
 
+  auto start = std::chrono::system_clock::now();
+  const int maxCounter = 30;
   int counter = 0;
   while (true)
   {
     cv::Mat frame;
 	cap >> frame;
-
-    if (cv::waitKey(30) >= 0)
-    {
-    	counter++;
-
-        std::stringstream ss;
-        ss << "webcam_";
-        ss << counter;
-        ss << ".png";
-        std::string path = ss.str();
-
-    	cv::imwrite(path, frame);
-    	std::cout << "Frame written to: " << path << std::endl;
-    }
-
     cv::imshow("live", frame);
+    counter++;
+
+    if (counter == maxCounter)
+    {
+      auto end = std::chrono::system_clock::now();
+      double elapsed = std::chrono::duration_cast<std::chrono::duration<double> >(end - start).count();
+      std::cout << "FPS: " << (maxCounter / elapsed) << ", Elapsed time: " << elapsed << std::endl;
+      start = std::chrono::system_clock::now();
+      counter = 0;
+    }
   }
 
   return 0;
