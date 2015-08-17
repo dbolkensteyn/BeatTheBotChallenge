@@ -6,7 +6,7 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/nonfree/features2d.hpp"
 
-BTB::ProcessedImage::ProcessedImage(cv::SURF algo, cv::Mat image) :
+BTB::ProcessedImage::ProcessedImage(const cv::SURF &algo, const cv::Mat &image) :
   keypoints(),
   descriptors()
 {
@@ -32,7 +32,7 @@ BTB::StaticDetector::StaticDetector() :
 {
 }
 
-BTB::StaticDetector BTB::StaticDetector::CreateFromTrainFolder(std::string path)
+BTB::StaticDetector BTB::StaticDetector::CreateFromTrainFolder(const std::string &path)
 {
   BTB::StaticDetector result;
 
@@ -51,7 +51,7 @@ BTB::StaticDetector BTB::StaticDetector::CreateFromTrainFolder(std::string path)
   return result;
 }
 
-void BTB::StaticDetector::addTrainImage(cv::Mat image)
+void BTB::StaticDetector::addTrainImage(const cv::Mat &image)
 {
   if (processedTrainImages.empty())
   {
@@ -87,7 +87,7 @@ bool DMatchSorter(const cv::DMatch& left, const cv::DMatch& right)
   return left.distance < right.distance;
 }
 
-bool BTB::StaticDetector::detectIn(cv::Mat image, cv::Point2f &out)
+bool BTB::StaticDetector::detectIn(const cv::Mat &image, cv::Point2f &out)
 {
   ProcessedImage processedSceneImage(algo, image);
 
