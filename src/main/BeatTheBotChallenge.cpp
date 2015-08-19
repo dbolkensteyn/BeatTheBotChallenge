@@ -1,4 +1,5 @@
 #include "StaticDetector.hpp"
+#include "DynamicDetector.hpp"
 #include "PhoneBorderDetector.hpp"
 #include "Serial.hpp"
 
