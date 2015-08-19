@@ -22,7 +22,7 @@ bool BTB::DynamicDetector::track(const cv::Mat &image, cv::Point2f &out)
   cv::Mat mask = cv::Mat::zeros(oldImage.size(), CV_8U);
   mask(roi) = 1;
   std::vector<cv::Point2f> corners;
-  cv::goodFeaturesToTrack(oldImage, corners, 100, 0.5, 3, mask);
+  cv::goodFeaturesToTrack(oldImage, corners, 100, 0.4, 3, mask);
   if (corners.empty())
   {
     return false;
