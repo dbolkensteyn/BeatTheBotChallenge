@@ -133,6 +133,32 @@ TEST(staticDetector, nonregression)
   std::cout << "Matches: " << matches << ", Mismatches: " << mismatches << ", Total: " << testImageFilenames.size() << ", Matching rate: " << (((double)matches / testImageFilenames.size()) * 100) << "%" << ", Mismatching rate: " << (((double)mismatches / testImageFilenames.size()) * 100) << "%" << std::endl;
 }
 
+TEST(staticDetector, performance)
+{
+  cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
+  ASSERT_TRUE(cap.isOpened()) << "Unable to open video!";
+
+  cv::Mat frame;
+
+  BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/");
+
+  time_t start;
+  time(&start);
+  int i = 0;
+  for (cap >> frame; frame.data && i < 200; cap >> frame, i++)
+  {
+    cv::Point2f v;
+    bool matched = detector.detectIn(frame, v);
+  }
+
+  time_t end;
+  time(&end);
+  double duration = end - start;
+  double fps = i / duration;
+
+  std::cout << "Performances: Tracked " << i << " frames in " << duration << " seconds, " << fps << " FPS" << std::endl;
+}
+
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
