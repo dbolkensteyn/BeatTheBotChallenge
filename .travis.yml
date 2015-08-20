@@ -4,6 +4,10 @@ sudo: true
 compiler:
   - gcc
 
+before_install:
+  - sudo apt-get -y remove ffmpeg
+  - sudo apt-get -y install libxvidcore-dev ffmpeg
+
 install:
   - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
   - bii setup:cpp
