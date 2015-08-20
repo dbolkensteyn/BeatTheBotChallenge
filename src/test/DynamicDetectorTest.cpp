@@ -1,6 +1,13 @@
 #include "DynamicDetector.hpp"
 
 #include <gtest/gtest.h>
+#include <time.h>
+
+const int initialX = 302;
+const int initialY = 265;
+const int motoWidth = 70;
+const int motoHeight = 90;
+const int expectedMinTrackLossFrame = 150;
 
 TEST(dynamicDetector, nonregression)
 {
@@ -8,17 +15,10 @@ TEST(dynamicDetector, nonregression)
   const int expectedWidth = 640;
   const int expectedHeight = 512;
 
-  const int initialX = 302;
-  const int initialY = 265;
-  const int motoWidth = 70;
-  const int motoHeight = 90;
-
   const double tolerance = 20;
   const cv::Point2i expected50(285, 260);
   const cv::Point2i expected100(336, 250); // poor
   const cv::Point2i expected150(307, 266); // poor
-
-  const int expectedMinTrackLossFrame = 150;
 
   cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
   ASSERT_TRUE(cap.isOpened()) << "Unable to open video!";
@@ -41,7 +41,6 @@ TEST(dynamicDetector, nonregression)
   int i = 1;
   while (i < frames)
   {
-    cv::Mat frame;
     cap >> frame;
     ASSERT_TRUE(frame.data) << "Could not load frame";
 
@@ -70,6 +69,39 @@ TEST(dynamicDetector, nonregression)
     i++;
   }
   EXPECT_TRUE(i > expectedMinTrackLossFrame) << "Tracking algorithm did not reach at expected frame! " << expectedMinTrackLossFrame;
+}
+
+TEST(dynamicDetector, performance)
+{
+  cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
+  ASSERT_TRUE(cap.isOpened()) << "Unable to open video!";
+
+  cv::Mat frame;
+  cap >> frame;
+  ASSERT_TRUE(frame.data) << "Could not load frame";
+  cv::Rect roi(initialX, initialY, motoWidth, motoHeight);
+
+  BTB::DynamicDetector detector(frame, roi);
+
+  time_t start;
+  time(&start);
+  int i = 0;
+  for (cap >> frame; frame.data; cap >> frame, i++)
+  {
+    cv::Point2f v;
+    if (!detector.track(frame, v))
+    {
+      break;
+    }
+  }
+  ASSERT_TRUE(i > expectedMinTrackLossFrame) << "Tracking algorithm did not reach at expected frame! " << expectedMinTrackLossFrame;
+
+  time_t end;
+  time(&end);
+  double duration = end - start;
+  double fps = i / duration;
+
+  std::cout << "Performances: Tracked " << i << " frames in " << duration << " seconds, " << fps << " FPS" << std::endl;
 }
 
 int main(int argc, char **argv) {
