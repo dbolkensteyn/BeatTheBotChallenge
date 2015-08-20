@@ -7,7 +7,9 @@ compiler:
 before_install:
   - sudo apt-get update
   - sudo apt-get -y remove ffmpeg
-  - sudo apt-get -y install libxvidcore-dev ffmpeg
+  - sudo apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev
+  - sudo apt-get -y install libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev
+  - sudo apt-get -y install x264 v4l-utils ffmpeg
 
 install:
   - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
