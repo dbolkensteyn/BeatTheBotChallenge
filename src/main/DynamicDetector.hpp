@@ -1,6 +1,8 @@
 #ifndef __BTB_DYNAMIC_DETECTOR_H__
 #define __BTB_DYNAMIC_DETECTOR_H__
 
+#include "StaticDetector.hpp"
+
 #include "opencv2/opencv.hpp"
 
 namespace BTB
@@ -8,14 +10,13 @@ namespace BTB
   class DynamicDetector
   {
   public:
-    DynamicDetector(const cv::Mat &image, const cv::Rect &roi);
-    void resync(const cv::Mat &image, const cv::Rect &roi);
-    bool track(const cv::Mat &image, cv::Point2f &out);
+    DynamicDetector(BTB::StaticDetector &staticDetector);
+    bool detectIn(const cv::Mat &frame, cv::Point2f &out);
 
   private:
-    static cv::Mat toGreyscale(const cv::Mat &image);
-    cv::Mat oldImage;
-    cv::Rect roi;
+    BTB::StaticDetector &staticDetector;
+    bool hasLastLocation;
+    cv::Point2i lastLocation;
   };
 }
 
