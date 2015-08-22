@@ -138,25 +138,35 @@ TEST(staticDetector, performance)
   cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
   ASSERT_TRUE(cap.isOpened()) << "Unable to open video!";
 
-  cv::Mat frame;
-
   BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/");
 
   time_t start;
   time(&start);
-  int i = 0;
-  for (cap >> frame; frame.data && i < 200; cap >> frame, i++)
+
+  int frames = 0;
+  int tracked = 0;
+  for (; frames < 200; frames++)
   {
+    cv::Mat frame;
+    cap >> frame;
+    if (!frame.data)
+    {
+      break;
+    }
+
     cv::Point2f v;
-    bool matched = detector.detectIn(frame, v);
+    if (detector.detectIn(frame, v))
+    {
+      tracked++;
+    }
   }
 
   time_t end;
   time(&end);
   double duration = end - start;
-  double fps = i / duration;
+  double fps = frames / duration;
 
-  std::cout << "Performances: Tracked " << i << " frames in " << duration << " seconds, " << fps << " FPS" << std::endl;
+  std::cout << "Performances: Processed " << frames << " frames in " << duration << " seconds, " << fps << " FPS, successfully tracked: " << tracked << " frames or " << ((double(tracked) / frames) * 100) << "%" << std::endl;
 }
 
 int main(int argc, char **argv) {
