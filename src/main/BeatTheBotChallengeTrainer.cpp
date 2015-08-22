@@ -6,12 +6,12 @@
 #define WIDTH 640
 #define HEIGHT 512 // 0.8 * WIDTH
 
-static void printHelp()
+static void printAcquireHelp()
 {
   std::cout << "HELP: Set focus on the live video and press 'i' to capture an image, 'v' to start/end a video capture or 'q' to quit." << std::endl;
 }
 
-int main()
+static int acquire()
 {
   cv::VideoCapture cap(0);
   if (!cap.isOpened())
@@ -30,7 +30,7 @@ int main()
   std::vector<cv::Mat> videoFrames;
   int counter = 0;
 
-  printHelp();
+  printAcquireHelp();
   cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
 
   while (true)
@@ -49,7 +49,7 @@ int main()
       if (videoCapturing)
       {
         std::cout << "ERROR: Video capture is still on!" << std::endl;
-        printHelp();
+        printAcquireHelp();
       }
       else
       {
@@ -61,7 +61,7 @@ int main()
       if (videoCapturing)
       {
         std::cout << "ERROR: Video capture is still on!" << std::endl;
-        printHelp();
+        printAcquireHelp();
       }
       else
       {
@@ -117,11 +117,81 @@ int main()
     else if (key != -1)
     {
       std::cout << "Unknown command '" << (char)key << "'" << std::endl;
-      printHelp(); 
+      printAcquireHelp(); 
     }
 
     cv::imshow("live", frame);
   }
 
   return 0;
+}
+
+static int split(std::string filename, int interval, int offset)
+{
+  cv::VideoCapture cap(filename);
+  if (!cap.isOpened())
+  {
+    std::cout << "Unable to open video file: " << filename << std::endl;
+    return 1;
+  }
+
+  int counter = 0;
+  cv::Mat frame;
+  for (cap >> frame; frame.data; cap >> frame, counter++)
+  {
+    if (counter % interval == 0)
+    {
+      std::stringstream ss;
+      ss << "webcam_";
+      ss << offset;
+      ss << ".png";
+      std::string path = ss.str();
+
+      cv::imwrite(path, frame);
+      std::cout << "Image written to: " << path << std::endl;
+
+      offset++;
+    }
+  }
+
+  return 0;
+}
+
+int main(int argc, char* argv[])
+{
+  std::string executable = std::string(argv[0]);
+  if (argc < 2)
+  {
+    std::cout << "Usage: " << executable << " [acquire|split]" << std::endl;
+    return 1;
+  }
+
+  std::string command = std::string(argv[1]);
+  if (command == "acquire")
+  {
+    if (argc != 2)
+    {
+      std::cout << "Usage: " << executable << " acquire" << std::endl;
+      return 1;
+    }
+
+    return acquire();
+  }
+  else if (command == "split")
+  {
+    if (argc != 5)
+    {
+      std::cout << "Usage: " << executable << " split [filename] [frame interval] [start offset]" << std::endl;
+      return 1;
+    }
+
+    std::string filename = std::string(argv[2]);
+    int interval = std::stoi(std::string(argv[3]));
+    int offset = std::stoi(std::string(argv[4]));
+
+    return split(filename, interval, offset);
+  }
+
+  std::cout << "Unknown command: " << command << std::endl;
+  return 1;
 }
