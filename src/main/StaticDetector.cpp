@@ -40,18 +40,22 @@ BTB::StaticDetector BTB::StaticDetector::CreateFromTrainFolder(const std::string
   for (std::vector<std::string>::iterator it = filenames.begin(); it != filenames.end(); ++it)
   {
     std::string filename = *it;
-    cv::Mat image = cv::imread(path + "/" + filename);
+    std::string fullpath = path + "/" + filename;
+    cv::Mat image = cv::imread(fullpath);
     if (!image.data)
     {
-      throw std::logic_error("error loading: " + path + "/" + filename);
+      throw std::logic_error("error loading: " + fullpath);
     }
-    result.addTrainImage(image);
+    if (!result.addTrainImage(image))
+    {
+      throw std::logic_error("error loading: " + fullpath + ": no useful information - delete it");
+    }
   }
 
   return result;
 }
 
-void BTB::StaticDetector::addTrainImage(const cv::Mat &image)
+bool BTB::StaticDetector::addTrainImage(const cv::Mat &image)
 {
   if (processedTrainImages.empty())
   {
@@ -64,11 +68,18 @@ void BTB::StaticDetector::addTrainImage(const cv::Mat &image)
   }
 
   ProcessedImage processedTrainImage(algo, image);
+  if (processedTrainImage.descriptors.empty())
+  {
+    return false;
+  }
+
   processedTrainImages.push_back(processedTrainImage);
 
   std::vector<cv::Mat> newDescriptor;
   newDescriptor.push_back(processedTrainImage.descriptors);
   matcher.add(newDescriptor);
+
+  return true;
 }
 
 cv::Size BTB::StaticDetector::getTrainImageSize()
