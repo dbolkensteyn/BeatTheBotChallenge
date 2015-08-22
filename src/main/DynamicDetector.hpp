@@ -11,7 +11,7 @@ namespace BTB
   {
   public:
     DynamicDetector(BTB::StaticDetector &staticDetector);
-    bool detectIn(const cv::Mat &frame, cv::Point2f &out);
+    bool detectIn(const cv::Mat &frame, cv::Point2i &out);
 
   private:
     BTB::StaticDetector &staticDetector;

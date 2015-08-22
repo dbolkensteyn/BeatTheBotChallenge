@@ -7,7 +7,7 @@ BTB::PhoneBorderDetector::PhoneBorderDetector()
 {
 }
 
-bool BTB::PhoneBorderDetector::detectLeftBorder(const cv::Mat &image, cv::Point2f from, cv::Point2f &out)
+bool BTB::PhoneBorderDetector::detectLeftBorder(const cv::Mat &image, cv::Point2i from, cv::Point2i &out)
 {
   while (from.x >= 0)
   {
@@ -21,7 +21,7 @@ bool BTB::PhoneBorderDetector::detectLeftBorder(const cv::Mat &image, cv::Point2
   return false;
 }
 
-bool BTB::PhoneBorderDetector::detectRightBorder(const cv::Mat &image, cv::Point2f from, cv::Point2f &out)
+bool BTB::PhoneBorderDetector::detectRightBorder(const cv::Mat &image, cv::Point2i from, cv::Point2i &out)
 {
   while (from.x < image.cols)
   {
@@ -41,12 +41,12 @@ bool BTB::PhoneBorderDetector::isBlack(const cv::Vec3b &v)
   return v.val[0] < threshold && v.val[1] < threshold && v.val[2] < threshold;
 }
 
-bool BTB::PhoneBorderDetector::isBlackVerticalLine(const cv::Mat &image, const cv::Point2f &p)
+bool BTB::PhoneBorderDetector::isBlackVerticalLine(const cv::Mat &image, const cv::Point2i &p)
 {
   for (int i = -MIN_VERTICAL_LINE_SIZE; i < MIN_VERTICAL_LINE_SIZE; i++)
   {
     int y = p.y + i;
-    if (y >= 0 && y < image.rows && !isBlack(image.at<cv::Vec3b>(cv::Point2f(p.x, y))))
+    if (y >= 0 && y < image.rows && !isBlack(image.at<cv::Vec3b>(cv::Point2i(p.x, y))))
     {
       return false;
     }

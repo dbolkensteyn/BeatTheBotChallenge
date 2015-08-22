@@ -11,13 +11,13 @@ namespace BTB
     PhoneBorderDetector();
 
     // from must be a point within the phone screen (e.g. the moto)
-    bool detectLeftBorder(const cv::Mat &image, cv::Point2f from, cv::Point2f &out);
+    bool detectLeftBorder(const cv::Mat &image, cv::Point2i from, cv::Point2i &out);
 
     // from must be a point within the phone screen (e.g. the moto)
-    bool detectRightBorder(const cv::Mat &image, cv::Point2f from, cv::Point2f &out);
+    bool detectRightBorder(const cv::Mat &image, cv::Point2i from, cv::Point2i &out);
   private:
     bool isBlack(const cv::Vec3b &v);
-    bool isBlackVerticalLine(const cv::Mat &image, const cv::Point2f &p);
+    bool isBlackVerticalLine(const cv::Mat &image, const cv::Point2i &p);
   };
 }
 

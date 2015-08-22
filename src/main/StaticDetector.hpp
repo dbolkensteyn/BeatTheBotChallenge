@@ -22,7 +22,7 @@ namespace BTB
     StaticDetector();
     static StaticDetector CreateFromTrainFolder(const std::string &path);
     void addTrainImage(const cv::Mat &image);
-    bool detectIn(const cv::Mat &image, cv::Point2f &out);
+    bool detectIn(const cv::Mat &image, cv::Point2i &out);
     cv::Size getTrainImageSize();
 
   private:

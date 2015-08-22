@@ -10,7 +10,7 @@ BTB::DynamicDetector::DynamicDetector(BTB::StaticDetector &staticDetector) :
 {
 }
 
-bool BTB::DynamicDetector::detectIn(const cv::Mat &frame, cv::Point2f &out)
+bool BTB::DynamicDetector::detectIn(const cv::Mat &frame, cv::Point2i &out)
 {
   if (hasLastLocation)
   {
@@ -18,10 +18,10 @@ bool BTB::DynamicDetector::detectIn(const cv::Mat &frame, cv::Point2f &out)
     cv::Rect roi(tl.x, tl.y, std::min(frame.rows, tl.x + 70 + 2*30) - tl.x, std::min(frame.rows, tl.y + 90 + 2*30) - tl.y);
     cv::Mat image = frame(roi);
 
-    cv::Point2f v;
+    cv::Point2i v;
     if (staticDetector.detectIn(image, v))
     {
-      out = v + cv::Point2f(roi.tl().x, roi.tl().y);
+      out = v + cv::Point2i(roi.tl().x, roi.tl().y);
       lastLocation = out;
       return true;
     }

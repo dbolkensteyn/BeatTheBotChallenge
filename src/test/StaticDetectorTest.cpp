@@ -103,9 +103,9 @@ TEST(staticDetector, nonregression)
     cv::Mat testImage = loadImage("../../../database/testing/" + testImageFilename);
     cv::Mat templateImage = loadImage("../../../database/full/" + imageNumber + ".png");
 
-    cv::Point2f expected = findExactMatch(testImage, templateImage);
+    cv::Point2i expected = findExactMatch(testImage, templateImage);
 
-    cv::Point2f actual;
+    cv::Point2i actual;
     bool matched = detector.detectIn(testImage, actual);
     double distance = cv::norm(expected - actual);
 
@@ -154,7 +154,7 @@ TEST(staticDetector, performance)
       break;
     }
 
-    cv::Point2f v;
+    cv::Point2i v;
     if (detector.detectIn(frame, v))
     {
       tracked++;

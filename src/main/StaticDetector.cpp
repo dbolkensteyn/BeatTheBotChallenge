@@ -37,7 +37,7 @@ BTB::StaticDetector BTB::StaticDetector::CreateFromTrainFolder(const std::string
   BTB::StaticDetector result;
 
   std::vector<std::string> filenames = BTB::GetFilesIn(path);
-  for(std::vector<std::string>::iterator it = filenames.begin(); it != filenames.end(); ++it)
+  for (std::vector<std::string>::iterator it = filenames.begin(); it != filenames.end(); ++it)
   {
     std::string filename = *it;
     cv::Mat image = cv::imread(path + "/" + filename);
@@ -87,7 +87,7 @@ bool DMatchSorter(const cv::DMatch& left, const cv::DMatch& right)
   return left.distance < right.distance;
 }
 
-bool BTB::StaticDetector::detectIn(const cv::Mat &image, cv::Point2f &out)
+bool BTB::StaticDetector::detectIn(const cv::Mat &image, cv::Point2i &out)
 {
   ProcessedImage processedSceneImage(algo, image);
 
@@ -104,18 +104,18 @@ bool BTB::StaticDetector::detectIn(const cv::Mat &image, cv::Point2f &out)
     }
   }
 
-  std::vector<cv::Point2f> translationVectors;
+  std::vector<cv::Point2i> translationVectors;
   for (int i = 0; i < goodMatches.size(); i++)
   {
     for (int j = i + 1; j < goodMatches.size(); j++)
     {
-      cv::Point2f scenePoint1 = processedSceneImage.keypoints[matches[i].queryIdx].pt;
-      cv::Point2f scenePoint2 = processedSceneImage.keypoints[matches[j].queryIdx].pt;
-      cv::Point2f trainPoint1 = processedTrainImages[matches[i].imgIdx].keypoints[matches[i].trainIdx].pt;
-      cv::Point2f trainPoint2 = processedTrainImages[matches[j].imgIdx].keypoints[matches[j].trainIdx].pt;
+      cv::Point2i scenePoint1 = processedSceneImage.keypoints[matches[i].queryIdx].pt;
+      cv::Point2i scenePoint2 = processedSceneImage.keypoints[matches[j].queryIdx].pt;
+      cv::Point2i trainPoint1 = processedTrainImages[matches[i].imgIdx].keypoints[matches[i].trainIdx].pt;
+      cv::Point2i trainPoint2 = processedTrainImages[matches[j].imgIdx].keypoints[matches[j].trainIdx].pt;
 
-      double distScene = norm(scenePoint1 - scenePoint2);
-      double distTrain = norm(trainPoint1 - trainPoint2);
+      double distScene = cv::norm(scenePoint1 - scenePoint2);
+      double distTrain = cv::norm(trainPoint1 - trainPoint2);
 
       double diff = std::abs(distScene - distTrain) / std::min(distScene, distTrain);
 
@@ -132,10 +132,12 @@ bool BTB::StaticDetector::detectIn(const cv::Mat &image, cv::Point2f &out)
     return false;
   }
 
-  cv::Point2f translationVectorsSum = std::accumulate(
+  cv::Point2i translationVectorsSum = std::accumulate(
                                           translationVectors.begin(), translationVectors.end(),
-                                          cv::Point2f(0.0f, 0.0f));
+                                          cv::Point2i(0, 0));
 
-  out = translationVectorsSum * (1.0f / translationVectors.size());
+  cv::Point2f outFloat = translationVectorsSum * (1.0f / translationVectors.size());
+  out = cv::Point2i(int(outFloat.x + 0.5f), int(outFloat.y + 0.5f));
+
   return true;
 }

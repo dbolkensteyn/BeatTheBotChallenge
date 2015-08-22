@@ -33,15 +33,15 @@ int main(int argc, char** argv)
     //frame = cv::imread(argv[argc - 1]); // TODO: REMOVE ME
     if (!frame.data) throw std::invalid_argument("frame not valid - does the image exist?");
 
-    cv::Point2f v;
+    cv::Point2i v;
     if (detector.detectIn(frame, v))
     {
       // Draw a rectangle around the detected object
       cv::Size trainImageSize = detector.getTrainImageSize();
-      cv::rectangle(frame, cv::Point2f(0, 0) + v, cv::Point2f(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 255, 0), 4);
+      cv::rectangle(frame, cv::Point2i(0, 0) + v, cv::Point2i(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 255, 0), 4);
 
       // Detect & draw phone left border
-      cv::Point2f leftBorder;
+      cv::Point2i leftBorder;
       bool hasLeftBorder = borderDetector.detectLeftBorder(frame, v, leftBorder);
       if (hasLeftBorder)
       {
@@ -49,11 +49,11 @@ int main(int argc, char** argv)
       }
 
       // Detect & draw phone right border
-      cv::Point2f rightBorder;
-      bool hasRightBorder = borderDetector.detectRightBorder(frame, v + cv::Point2f(trainImageSize.width, 0), rightBorder);
+      cv::Point2i rightBorder;
+      bool hasRightBorder = borderDetector.detectRightBorder(frame, v + cv::Point2i(trainImageSize.width, 0), rightBorder);
       if (hasRightBorder)
       {
-        cv::line(frame, v + cv::Point2f(trainImageSize.width, 0), rightBorder, cv::Scalar(255, 0, 0), 4);
+        cv::line(frame, v + cv::Point2i(trainImageSize.width, 0), rightBorder, cv::Scalar(255, 0, 0), 4);
       }
 
       // Compute target line
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
         double targetX = target * screenWidth + leftBorder.x;
 
         // TODO Remove hardcoded y offsets
-        cv::line(frame, cv::Point2f(targetX, leftBorder.y - 30), cv::Point2f(targetX, leftBorder.y + 120), cv::Scalar(0, 0, 255), 4);
+        cv::line(frame, cv::Point2i(targetX, leftBorder.y - 30), cv::Point2i(targetX, leftBorder.y + 120), cv::Scalar(0, 0, 255), 4);
 
         // Send angle correction order to the Arduino
         const int level = 113;

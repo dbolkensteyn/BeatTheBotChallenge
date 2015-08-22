@@ -12,7 +12,7 @@ TEST(dynamicDetector, nonregression)
   const int tolerance = 10;
   const int assertEveryNDetectedFrame = 20;
 
-  const int expectedMissDetectFrame = 759;
+  const int expectedMissDetectFrame = 321;
 
   cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
   ASSERT_TRUE(cap.isOpened()) << "Unable to open video!";
@@ -31,16 +31,16 @@ TEST(dynamicDetector, nonregression)
     cap >> frame;
     ASSERT_TRUE(frame.data) << "Could not load frame";
 
-    cv::Point2f v;
+    cv::Point2i v;
     if (detector.detectIn(frame, v))
     {
       cv::Size trainImageSize = staticDetector.getTrainImageSize();
-      cv::rectangle(frame, cv::Point2f(0, 0) + v, cv::Point2f(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 0, 255), 4);
+      cv::rectangle(frame, cv::Point2i(0, 0) + v, cv::Point2i(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 0, 255), 4);
 
       assertCounter++;
       if (assertCounter % assertEveryNDetectedFrame == 0)
       {
-        cv::Point2f v2;
+        cv::Point2i v2;
         if (staticDetector.detectIn(frame, v2))
         {
           double distance = cv::norm(v2 - v);
@@ -86,7 +86,7 @@ TEST(dynamicDetector, performance)
       break;
     }
 
-    cv::Point2f v;
+    cv::Point2i v;
     if (detector.detectIn(frame, v))
     {
       tracked++;
