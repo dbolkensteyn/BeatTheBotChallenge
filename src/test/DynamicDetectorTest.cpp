@@ -9,11 +9,6 @@ TEST(dynamicDetector, nonregression)
   const int expectedWidth = 640;
   const int expectedHeight = 512;
 
-  const int tolerance = 10;
-  const int assertEveryNDetectedFrame = 20;
-
-  const int expectedMissDetectFrame = 321;
-
   cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
   ASSERT_TRUE(cap.isOpened()) << "Unable to open video!";
   int frames = cap.get(CV_CAP_PROP_FRAME_COUNT);
@@ -36,21 +31,6 @@ TEST(dynamicDetector, nonregression)
     {
       cv::Size trainImageSize = staticDetector.getTrainImageSize();
       cv::rectangle(frame, cv::Point2i(0, 0) + v, cv::Point2i(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 0, 255), 4);
-
-      assertCounter++;
-      if (assertCounter % assertEveryNDetectedFrame == 0)
-      {
-        cv::Point2i v2;
-        if (staticDetector.detectIn(frame, v2))
-        {
-          double distance = cv::norm(v2 - v);
-          EXPECT_TRUE(distance < tolerance || i == expectedMissDetectFrame) << "Static vs Dynamic did not detect the same object on frame " << i << ", distance = " << distance;
-        }
-        else
-        {
-          std::cout << "Could detect dynamically but not statically on frame " << i << std::endl;
-        }
-      }
     }
     else
     {

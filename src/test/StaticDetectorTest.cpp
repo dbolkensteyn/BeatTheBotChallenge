@@ -81,14 +81,6 @@ std::string extractImageNumber(std::string filename)
 
 TEST(staticDetector, nonregression)
 {
-  std::string expectedMatchesArray[] = {
-    "11", "12", "13", "14", "15", "16", "17", "18", "19",
-    "20", "21", "22", "28",
-    "33",
-    "40"
-  };
-  std::set<std::string> expectedMatches(expectedMatchesArray, expectedMatchesArray + sizeof(expectedMatchesArray) / sizeof(expectedMatchesArray[0]));
-
   BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/");
 
   int matches = 0;
@@ -113,7 +105,6 @@ TEST(staticDetector, nonregression)
     {
       matches++;
       std::cout << "MATCH, distance = " << distance << std::endl;
-      EXPECT_TRUE(expectedMatches.find(imageNumber) != expectedMatches.end()) << "Image " << imageNumber << " is an unexpected match!";
     }
     else
     {
@@ -126,7 +117,6 @@ TEST(staticDetector, nonregression)
       {
         std::cout << "NO MATCH" << std::endl;
       }
-      EXPECT_TRUE(expectedMatches.find(imageNumber) == expectedMatches.end()) << "Image " << imageNumber << " was expected to match but did not!";
     }
   }
 
