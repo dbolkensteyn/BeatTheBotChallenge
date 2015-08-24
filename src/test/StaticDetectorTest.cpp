@@ -81,6 +81,10 @@ std::string extractImageNumber(std::string filename)
 
 TEST(staticDetector, nonregression)
 {
+  const int expectedMatches = 38;
+  const int expectedMismatches = 29;
+  const int expectedNoMatches = 8;
+
   BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/");
 
   int matches = 0;
@@ -121,6 +125,10 @@ TEST(staticDetector, nonregression)
   }
 
   std::cout << "Matches: " << matches << ", Mismatches: " << mismatches << ", Total: " << testImageFilenames.size() << ", Matching rate: " << (((double)matches / testImageFilenames.size()) * 100) << "%" << ", Mismatching rate: " << (((double)mismatches / testImageFilenames.size()) * 100) << "%" << std::endl;
+
+  EXPECT_EQ(expectedMatches, matches) << "# of matches differ";
+  EXPECT_EQ(expectedMismatches, mismatches) << "# of mismatches differ";
+  EXPECT_EQ(expectedNoMatches, testImageFilenames.size() - matches - mismatches) << "# of no matches differ";
 }
 
 TEST(staticDetector, performance)
