@@ -189,18 +189,11 @@ cv::Size BTB::StaticDetector::getTrainImageSize()
   return trainImageSize;
 }
 
-// TODO Remove me
-bool DMatchSorter(const cv::DMatch& left, const cv::DMatch& right)
-{
-  return left.distance < right.distance;
-}
-
 std::vector<cv::DMatch> BTB::StaticDetector::computeMatches(cv::BFMatcher &matcher, const BTB::ProcessedImage &processedImage)
 {
-  std::vector<cv::DMatch> matches;
   // TODO Use radiusMatch()? with radius < 0.3
+  std::vector<cv::DMatch> matches;
   matcher.match(processedImage.descriptors, matches);
-  std::sort(matches.begin(), matches.end(), DMatchSorter);
 
   std::vector<cv::DMatch> goodMatches;
   for (int i = 0; i < matches.size(); i++)
