@@ -22,7 +22,8 @@ int main(int argc, char** argv)
     return -1;
   }
 
-  BTB::StaticDetector detector = BTB::StaticDetector::CreateFromTrainFolder("database/training/");
+  BTB::StaticDetector staticDetector = BTB::StaticDetector::CreateFromTrainFolder("database/training/", "database/full/");
+  BTB::DynamicDetector detector(staticDetector);
   BTB::PhoneBorderDetector borderDetector;
 
   cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
@@ -37,7 +38,7 @@ int main(int argc, char** argv)
     if (detector.detectIn(frame, v))
     {
       // Draw a rectangle around the detected object
-      cv::Size trainImageSize = detector.getTrainImageSize();
+      cv::Size trainImageSize = staticDetector.getTrainImageSize();
       cv::rectangle(frame, cv::Point2i(0, 0) + v, cv::Point2i(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 255, 0), 4);
 
       // Detect & draw phone left border

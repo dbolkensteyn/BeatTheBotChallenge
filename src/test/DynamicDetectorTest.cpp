@@ -16,7 +16,7 @@ TEST(dynamicDetector, nonregression)
   ASSERT_EQ(expectedWidth, cap.get(CV_CAP_PROP_FRAME_WIDTH)) << "Unexpected width";
   ASSERT_EQ(expectedHeight, cap.get(CV_CAP_PROP_FRAME_HEIGHT)) << "Unexpected height";
 
-  BTB::StaticDetector staticDetector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/");
+  BTB::StaticDetector staticDetector = BTB::StaticDetector::CreateFromTrainFolder("../../../database/training/", "../../../database/full/");
   BTB::DynamicDetector detector(staticDetector);
 
   int assertCounter = 0;
