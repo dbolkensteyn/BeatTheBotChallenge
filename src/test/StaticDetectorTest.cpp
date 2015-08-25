@@ -39,6 +39,7 @@ TEST(staticDetector, nonregression)
 
   int matches = 0;
   int mismatches = 0;
+  double mismatchesDistance = 0;
   std::vector<std::string> testImageFilenames = BTB::GetFilesIn("../../../database/testing/");
   for (std::vector<std::string>::iterator it = testImageFilenames.begin(); it != testImageFilenames.end(); ++it)
   {
@@ -65,6 +66,7 @@ TEST(staticDetector, nonregression)
       if (matched)
       {
         mismatches++;
+        mismatchesDistance += distance;
         std::cout << "MISMATCH, distance = " << distance << std::endl;
       }
       else
@@ -74,7 +76,10 @@ TEST(staticDetector, nonregression)
     }
   }
 
-  std::cout << "Matches: " << matches << ", Mismatches: " << mismatches << ", Total: " << testImageFilenames.size() << ", Matching rate: " << (((double)matches / testImageFilenames.size()) * 100) << "%" << ", Mismatching rate: " << (((double)mismatches / testImageFilenames.size()) * 100) << "%" << std::endl;
+  double matchingRate = ((double)matches / testImageFilenames.size()) * 100;
+  double mismatchingRate = ((double)mismatches / testImageFilenames.size()) * 100;
+  double averageMismatchDistance = mismatchesDistance / mismatches;
+  std::cout << "Matches: " << matches << ": " << matchingRate << "%, Mismatches: " << mismatches << ": " << mismatchingRate << "% avg. distance: " << averageMismatchDistance << ", Total: " << testImageFilenames.size() << std::endl;
 
   EXPECT_EQ(expectedMatches, matches) << "# of matches differ";
   EXPECT_EQ(expectedMismatches, mismatches) << "# of mismatches differ";
