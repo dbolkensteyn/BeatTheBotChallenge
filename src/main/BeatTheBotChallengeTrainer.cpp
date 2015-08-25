@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <sstream>
+#include <stdlib.h>
 #include "opencv2/opencv.hpp"
 
 #define WIDTH 640
@@ -186,8 +187,8 @@ int main(int argc, char* argv[])
     }
 
     std::string filename = std::string(argv[2]);
-    int interval = std::stoi(std::string(argv[3]));
-    int offset = std::stoi(std::string(argv[4]));
+    int interval = (int)strtol(argv[3], (char **)NULL, 10);
+    int offset = (int)strtol(argv[4], (char **)NULL, 10);
 
     return split(filename, interval, offset);
   }
