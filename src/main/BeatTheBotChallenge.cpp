@@ -31,8 +31,10 @@ int main(int argc, char** argv)
   {
     cv::Mat frame;
     cap >> frame;
-    //frame = cv::imread(argv[argc - 1]); // TODO: REMOVE ME
-    if (!frame.data) throw std::invalid_argument("frame not valid - does the image exist?");
+    if (!frame.data)
+    {
+      throw std::invalid_argument("captured frame is invalid");
+    }
 
     cv::Point2i v;
     if (detector.detectIn(frame, v))
