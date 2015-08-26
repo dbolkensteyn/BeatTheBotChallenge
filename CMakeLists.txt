@@ -8,3 +8,6 @@ SET_TARGET_PROPERTIES(${BII_src_main_BeatTheBotChallengeTrainer_TARGET} PROPERTI
 
 # StaticDetectorTest
 SET_TARGET_PROPERTIES(${BII_src_test_StaticDetectorTest_TARGET} PROPERTIES OUTPUT_NAME StaticDetectorTest)
+
+# DynamicDetectorTest
+SET_TARGET_PROPERTIES(${BII_src_test_DynamicDetectorTest_TARGET} PROPERTIES OUTPUT_NAME DynamicDetectorTest)
