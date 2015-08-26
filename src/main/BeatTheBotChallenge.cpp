@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 
     cv::imshow("live", frame);
 
-    if (cv::waitKey(100) >= 0)
+    if (cv::waitKey(1) >= 0)
     {
       break;
     }
