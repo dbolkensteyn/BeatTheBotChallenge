@@ -63,7 +63,7 @@ int main(int argc, char** argv)
       if (hasLeftBorder && hasRightBorder)
       {
         int screenWidth = rightBorder.x - leftBorder.x;
-        double actual = (v.x + trainImageSize.width / 2 - leftBorder.x) / screenWidth;
+        double actual = (v.x + trainImageSize.width / 2.0 - leftBorder.x) / screenWidth;
         double target = 0.32;
         double targetX = target * screenWidth + leftBorder.x;
 
