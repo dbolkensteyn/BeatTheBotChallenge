@@ -24,45 +24,23 @@ void detectRoad(cv::Mat &image)
   cv::Mat grey;
   cvtColor(image, grey, CV_BGR2GRAY);
 
-  int morph_size = 2;
+  int morph_size = 50;
+
   cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size( 2*morph_size + 1, 2*morph_size+1 ));
-  cv::morphologyEx(grey, grey, cv::MORPH_GRADIENT, element);
+  cv::Mat op1;
+  cv::dilate(grey, op1, element);
 
-  cv::threshold(grey, grey, 150, 255.0, cv::THRESH_BINARY_INV);
+  morph_size = 2;
+  element = getStructuringElement(cv::MORPH_RECT, cv::Size( 2*morph_size + 1, 2*morph_size+1 ));
+  cv::Mat op2;
+  cv::erode(grey, op2, element);
+  cv::Mat result = op1 - op2;
 
-  element = getStructuringElement(cv::MORPH_RECT, cv::Size(9, 9));
-  cv::erode(grey, grey, element);
+  // phone borders here
 
-  cv::vector< cv::vector<cv::Point> > contours;
-  cv::Mat grey2;
-  grey.copyTo(grey2);
-  cv::findContours(grey2, contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
-  // filter contours
-  for (int i = 0; i < contours.size(); i++)
-  {
-      cv::Rect rect = cv::boundingRect(contours[i]);
+  cv::threshold(result, result, 170, 255.0, cv::THRESH_BINARY);
 
-      if (rect.width > 20 && rect.width < 120 && rect.height > 50 && rect.height < 110)
-      {
-        cv::drawContours(grey, contours, i, cv::Scalar(0), CV_FILLED);
-        double area = rect.width * rect.height;
-        double r = 1 - cv::countNonZero(grey(rect)) / area;
-        if (r > 0.7)
-        {
-          cv::rectangle(grey, rect, cv::Scalar(0), 5);
-        }
-        else
-        {
-          cv::drawContours(grey, contours, i, cv::Scalar(255), CV_FILLED);
-        }
-      }
-      else
-      {
-        //cv::drawContours(grey, contours, i, cv::Scalar(255), CV_FILLED);
-      }
-  }
-
-  cv::imshow("live", grey);
+  cv::imshow("live", result);
   cv::waitKey(10);
 }
 
