@@ -3,50 +3,25 @@
 #include <vector>
 #include <gtest/gtest.h>
 
-void detectRoad(cv::Mat &image, uchar &b, uchar &g, uchar &r)
-{
-  const int tolerance = 45;
-  const uchar min = 70;
-  const uchar max = 255;
-
-  uchar pMin = std::min(std::min(b, g), r);
-  uchar pMax = std::max(std::max(b, g), r);
-  if (pMin >= min && pMax <= max && pMax - pMin <= tolerance)
-  {
-    b = 0;
-    g = 255;
-    r = 0;
-  }
-}
-
 void detectRoad(cv::Mat &image)
 {
-  cv::Mat grey;
-  cvtColor(image, grey, CV_BGR2GRAY);
+  cv::vector<cv::Mat> colors(image.channels());
+  split(image, colors);
 
-  int morph_size = 50;
+  cv::Mat mean;
+  cv::addWeighted(colors[0], 0.5, colors[1], 0.5, 0.0, mean);
+  cv::addWeighted(mean, 0.67, colors[2], 0.33, 0.0, mean);
 
-  cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size( 2*morph_size + 1, 2*morph_size+1 ));
-  cv::Mat op1;
-  cv::dilate(grey, op1, element);
+  cv::absdiff(colors[0], mean, colors[0]);
+  cv::absdiff(colors[1], mean, colors[1]);
+  cv::absdiff(colors[2], mean, colors[2]);
 
-  morph_size = 2;
-  element = getStructuringElement(cv::MORPH_RECT, cv::Size( 2*morph_size + 1, 2*morph_size+1 ));
-  cv::Mat op2;
-  cv::erode(grey, op2, element);
-  cv::Mat result = op1 - op2;
-
-  // phone borders here
-
-  cv::threshold(result, result, 170, 255.0, cv::THRESH_BINARY);
-
-  cv::imshow("live", result);
-  cv::waitKey(10);
+  cv::Mat result = colors[0] + colors[1] + colors[2];
 }
 
 TEST(roadDetector, nonregression)
 {
-  cv::VideoCapture cap("../../../database/videos/webcam_1.avi");
+  cv::VideoCapture cap("../../../database/videos/webcam_2.avi");
 
   //cv::VideoCapture cap(0);
   //cap.set(CV_CAP_PROP_FRAME_WIDTH, 640);
