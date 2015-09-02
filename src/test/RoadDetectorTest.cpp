@@ -3,6 +3,8 @@
 #include <vector>
 #include <gtest/gtest.h>
 
+std::vector<cv::Point2i> oldCandidates;
+
 void detectRoad(cv::Mat &image)
 {
   cv::vector<cv::Mat> colors(image.channels());
@@ -17,6 +19,39 @@ void detectRoad(cv::Mat &image)
   cv::absdiff(colors[2], mean, colors[2]);
 
   cv::Mat result = colors[0] + colors[1] + colors[2];
+
+  cv::threshold(result, result, 100.0, 255.0, cv::THRESH_BINARY);
+
+  cv::Mat element = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2, 15));
+  cv::dilate(result, result, element);
+
+  std::vector<cv::Point2i> newCandidates;
+  std::vector< std::vector<cv::Point> > contours;
+  cv::Mat contoursInput;
+  result.copyTo(contoursInput);
+  cv::findContours(result, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+  for (std::vector< std::vector<cv::Point> >::iterator it = contours.begin(); it != contours.end(); ++it)
+  {
+    cv::Rect rect = cv::boundingRect(*it);
+    if (rect.width > 20 && rect.height > 20)
+    {
+      double r = double(countNonZero(result(rect))) / (rect.width * rect.height);
+      if (r > 0.6)
+      {
+        cv::rectangle(image, rect, cv::Scalar(0, 255, 0), 4);
+      }
+      else
+      {
+        cv::rectangle(image, rect, cv::Scalar(0, 0, 255), 4);
+      }
+    }
+  }
+
+  oldCandidates.clear();
+  oldCandidates = newCandidates;
+
+  cv::imshow("live", image);
+  cv::waitKey(60);
 }
 
 TEST(roadDetector, nonregression)
