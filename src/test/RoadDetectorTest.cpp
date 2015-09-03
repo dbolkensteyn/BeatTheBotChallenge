@@ -3,8 +3,6 @@
 #include <vector>
 #include <gtest/gtest.h>
 
-std::vector<cv::Point2i> oldCandidates;
-
 void detectRoad(cv::Mat &image)
 {
   cv::vector<cv::Mat> colors(image.channels());
@@ -25,10 +23,7 @@ void detectRoad(cv::Mat &image)
   cv::Mat element = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2, 15));
   cv::dilate(result, result, element);
 
-  std::vector<cv::Point2i> newCandidates;
   std::vector< std::vector<cv::Point> > contours;
-  cv::Mat contoursInput;
-  result.copyTo(contoursInput);
   cv::findContours(result, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
   for (std::vector< std::vector<cv::Point> >::iterator it = contours.begin(); it != contours.end(); ++it)
   {
@@ -40,18 +35,11 @@ void detectRoad(cv::Mat &image)
       {
         cv::rectangle(image, rect, cv::Scalar(0, 255, 0), 4);
       }
-      else
-      {
-        cv::rectangle(image, rect, cv::Scalar(0, 0, 255), 4);
-      }
     }
   }
 
-  oldCandidates.clear();
-  oldCandidates = newCandidates;
-
   cv::imshow("live", image);
-  cv::waitKey(60);
+  cv::waitKey(20);
 }
 
 TEST(roadDetector, nonregression)
