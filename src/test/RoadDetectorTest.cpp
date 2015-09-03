@@ -3,6 +3,10 @@
 #include <vector>
 #include <gtest/gtest.h>
 
+#define MIN_OBSTACLE_WIDTH 20
+#define MIN_OBSTACLE_HEIGHT 20
+#define MIN_OBSTACLE_DENSITY 0.60
+
 void detectRoad(cv::Mat &image)
 {
   cv::vector<cv::Mat> colors(image.channels());
@@ -28,10 +32,10 @@ void detectRoad(cv::Mat &image)
   for (std::vector< std::vector<cv::Point> >::iterator it = contours.begin(); it != contours.end(); ++it)
   {
     cv::Rect rect = cv::boundingRect(*it);
-    if (rect.width > 20 && rect.height > 20)
+    if (rect.width > MIN_OBSTACLE_WIDTH && rect.height > MIN_OBSTACLE_HEIGHT)
     {
       double r = double(countNonZero(result(rect))) / (rect.width * rect.height);
-      if (r > 0.6)
+      if (r > MIN_OBSTACLE_DENSITY)
       {
         cv::rectangle(image, rect, cv::Scalar(0, 255, 0), 4);
       }
