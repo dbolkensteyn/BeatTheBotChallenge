@@ -8,6 +8,9 @@
 #include <stdexcept>
 #include "opencv2/opencv.hpp"
 
+#define WIDTH 640
+#define HEIGHT 512 // 0.8 * WIDTH
+
 int main(int argc, char** argv)
 {
   std::cout << "Opening serial port..." << std::endl;
@@ -21,6 +24,8 @@ int main(int argc, char** argv)
     std::cout << "Error opening the default webcam" << std::endl;
     return -1;
   }
+  cap.set(CV_CAP_PROP_FRAME_WIDTH, WIDTH);
+  cap.set(CV_CAP_PROP_FRAME_HEIGHT, HEIGHT);
 
   BTB::StaticDetector staticDetector = BTB::StaticDetector::CreateFromTrainFolder("database/training/", "database/full/");
   BTB::DynamicDetector detector(staticDetector);
