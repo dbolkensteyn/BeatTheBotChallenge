@@ -1,11 +1,13 @@
 #include "StaticDetector.hpp"
 #include "DynamicDetector.hpp"
 #include "PhoneBorderDetector.hpp"
+#include "ObstacleDetector.hpp"
 #include "Serial.hpp"
 
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
+#include <time.h>
 #include "opencv2/opencv.hpp"
 
 #define WIDTH 640
@@ -31,6 +33,10 @@ int main(int argc, char** argv)
   BTB::DynamicDetector detector(staticDetector);
   BTB::PhoneBorderDetector borderDetector;
 
+  time_t lastTargetDecision;
+  time(&lastTargetDecision);
+  int target = 72 * 1.5;
+
   cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
   for (;;)
   {
@@ -48,14 +54,6 @@ int main(int argc, char** argv)
       cv::Size trainImageSize = staticDetector.getTrainImageSize();
       cv::rectangle(frame, cv::Point2i(0, 0) + v, cv::Point2i(trainImageSize.width, trainImageSize.height) + v, cv::Scalar(0, 255, 0), 4);
 
-      // Detect & draw phone left border
-      cv::Point2i leftBorder;
-      bool hasLeftBorder = borderDetector.detectLeftBorder(frame, v, leftBorder);
-      if (hasLeftBorder)
-      {
-        cv::line(frame, leftBorder, v, cv::Scalar(255, 0, 0), 4);
-      }
-
       // Detect & draw phone right border
       cv::Point2i rightBorder;
       bool hasRightBorder = borderDetector.detectRightBorder(frame, v + cv::Point2i(trainImageSize.width, 0), rightBorder);
@@ -65,22 +63,77 @@ int main(int argc, char** argv)
       }
 
       // Compute target line
-      if (hasLeftBorder && hasRightBorder)
+      if (hasRightBorder)
       {
-        int screenWidth = rightBorder.x - leftBorder.x;
-        double actual = (v.x + trainImageSize.width / 2.0 - leftBorder.x) / screenWidth;
-        double target = 0.32;
-        double targetX = target * screenWidth + leftBorder.x;
+        time_t now;
+        time(&now);
+
+        if (now - lastTargetDecision >= 5)
+        {
+          // Compute new target
+          lastTargetDecision = now;
+
+          const int laneWidthPx = 72;
+          if (target == laneWidthPx)
+          {
+            target = laneWidthPx * 1.5;
+          }
+          else
+          {
+            target = laneWidthPx;
+          }
+        }
+
+        int actual = v.x + trainImageSize.width / 2;
+        int expected = rightBorder.x - target;
+
+        // Detect obstacles
+        std::vector<cv::Rect> obstacles = BTB::DetectObstacles(frame);
+        for (std::vector<cv::Rect>::iterator it = obstacles.begin(); it != obstacles.end(); ++it)
+        {
+          cv::rectangle(frame, *it, cv::Scalar(0, 0, 255), 3);
+        }
 
         // TODO Remove hardcoded y offsets
-        cv::line(frame, cv::Point2i(targetX, leftBorder.y - 30), cv::Point2i(targetX, leftBorder.y + 120), cv::Scalar(0, 0, 255), 4);
+        cv::line(frame, cv::Point2i(expected, rightBorder.y - 30), cv::Point2i(expected, rightBorder.y + 120), cv::Scalar(255, 0, 0), 3);
 
         // Send angle correction order to the Arduino
         const int level = 113;
-        const int angleMax = 35;
 
-        double distance = actual - target;
-        int angle = (int)(distance * angleMax) + 113;
+        int angle;
+        int absDiff = std::abs(actual - expected);
+        if (absDiff <= 2)
+        {
+          // close enough
+          angle = level;
+        }
+        else
+        {
+          int sharp;
+          if (absDiff >= 20)
+          {
+            sharp = 5;
+          }
+          else if (absDiff >= 10)
+          {
+            sharp = 3;
+          }
+          else
+          {
+            sharp = 2;
+          }
+
+          if (actual < expected)
+          {
+            // tilt to the left
+            angle = level - sharp;
+          }
+          else
+          {
+            // tilt to the right
+            angle = level + sharp;
+          }
+        }
 
         std::stringstream ss;
         ss << angle;
@@ -91,13 +144,11 @@ int main(int argc, char** argv)
       else
       {
         // Did not detect borders
-        serial.writeLine("113");
       }
     }
     else
     {
       // Did not detect moto
-      serial.writeLine("113");
     }
 
     cv::imshow("live", frame);

@@ -29,7 +29,7 @@ std::vector<cv::Rect> BTB::DetectObstacles(const cv::Mat &frame)
     if (rect.width > 20 && rect.height > 20)
     {
       double r = double(countNonZero(result(rect))) / (rect.width * rect.height);
-      if (r > 0.6)
+      if (r > 0.5)
       {
         obstacles.push_back(rect);
       }

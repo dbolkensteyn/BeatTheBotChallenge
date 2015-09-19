@@ -1,6 +1,6 @@
 #include "PhoneBorderDetector.hpp"
 
-#define BLACK_THRESHOLD 50
+#define BLACK_THRESHOLD 70
 #define MIN_VERTICAL_LINE_SIZE 50
 
 BTB::PhoneBorderDetector::PhoneBorderDetector()
