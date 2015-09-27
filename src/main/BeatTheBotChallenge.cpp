@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 
   time_t lastTargetDecision;
   time(&lastTargetDecision);
-  int target = 72 * 1.5;
+  int target = 78 * 1.5;
 
   cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
   for (;;)
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
           // Compute new target
           lastTargetDecision = now;
 
-          const int laneWidthPx = 72;
+          const int laneWidthPx = 78;
           if (target == laneWidthPx)
           {
             target = laneWidthPx * 1.5;
@@ -110,11 +110,7 @@ int main(int argc, char** argv)
         else
         {
           int sharp;
-          if (absDiff >= 20)
-          {
-            sharp = 5;
-          }
-          else if (absDiff >= 10)
+          if (absDiff >= 10)
           {
             sharp = 3;
           }
