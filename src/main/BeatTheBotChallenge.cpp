@@ -35,7 +35,10 @@ int main(int argc, char** argv)
 
   time_t lastTargetDecision;
   time(&lastTargetDecision);
-  int target = 78 * 1.5;
+  const int laneWidthPx = 78;
+  const int middleTarget = laneWidthPx * 1.5;
+  bool hasObstacleOnMiddleLane = false;
+  int target = middleTarget;
 
   cv::namedWindow("live", cv::WINDOW_AUTOSIZE);
   for (;;)
@@ -68,20 +71,21 @@ int main(int argc, char** argv)
         time_t now;
         time(&now);
 
-        if (now - lastTargetDecision >= 5)
+        if (now - lastTargetDecision >= 3)
         {
           // Compute new target
           lastTargetDecision = now;
 
-          const int laneWidthPx = 78;
-          if (target == laneWidthPx)
-          {
-            target = laneWidthPx * 1.5;
-          }
-          else
+          if (hasObstacleOnMiddleLane)
           {
             target = laneWidthPx;
           }
+          else
+          {
+            target = middleTarget;
+          }
+
+          hasObstacleOnMiddleLane = false;
         }
 
         int actual = v.x + trainImageSize.width / 2;
@@ -92,6 +96,13 @@ int main(int argc, char** argv)
         for (std::vector<cv::Rect>::iterator it = obstacles.begin(); it != obstacles.end(); ++it)
         {
           cv::rectangle(frame, *it, cv::Scalar(0, 0, 255), 3);
+          cv::Point2i tl = it->tl();
+          cv::Point2i br = it->br();
+          if (tl.x >= rightBorder.x - 2*laneWidthPx && br.x <= rightBorder.x - laneWidthPx)
+          {
+            hasObstacleOnMiddleLane = true;
+            target = laneWidthPx;
+          }
         }
 
         // TODO Remove hardcoded y offsets
